@@ -24,9 +24,8 @@ function HowClose()
                 execute ":q"
                 endif
         endfunction
-    ]],false)
+    ]], false)
 end
-
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
@@ -34,13 +33,19 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
-tm([[<c-\>]],[[<c-\><c-n>:q<cr>]])
+tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
-local Terminal  = require('toggleterm.terminal').Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
+local Terminal = require('toggleterm.terminal').Terminal
+local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
 
 function _LAZYGIT_TOGGLE()
-  lazygit:toggle()
+    lazygit:toggle()
 end
 
-nm("<leader>l","<cmd>lua _LAZYGIT_TOGGLE()<cr>");
+nm("<leader>l", "<cmd>lua _LAZYGIT_TOGGLE()<cr>");
+
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
