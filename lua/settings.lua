@@ -33,3 +33,5 @@ opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- disable folding at startup
 opt.foldenable = false
+
+opt.termguicolors = true
