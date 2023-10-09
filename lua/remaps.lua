@@ -31,15 +31,15 @@ wk.register({
     ["<leader>"] = {
         b = {
             name = "+Buffer",
-            n = { "<cmd>:bnext<CR>", "Next buffer" },
-            p = { "<cmd>:bprevious<CR>", "Previous buffer" },
+            n = { "<cmd>bnext<CR>", "Next buffer" },
+            p = { "<cmd>bprevious<CR>", "Previous buffer" },
             s = { "<cmd>w<CR>", "Save buffer" },
             q = { "<cmd>wq<cr>", "Save and quit buffer" },
         },
         s = {
             name = "+Split",
-            v = { "<cmd>:vertical split<CR>" },
-            o = { "<cmd>:split<CR>" }
+            v = { "<cmd>vertical split<CR>" },
+            o = { "<cmd>split<CR>" }
         },
         w = {
             name = "+Window",

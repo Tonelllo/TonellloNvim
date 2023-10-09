@@ -130,9 +130,12 @@ return {
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
         local lspconfig = require('lspconfig')
-        lspconfig.pyright.setup {}
+        --lspconfig.pyright.setup {}
+        lspconfig.pylsp.setup {}
         lspconfig.lua_ls.setup {}
         lspconfig.matlab_ls.setup {}
         lspconfig.clangd.setup {}
+        lspconfig.bashls.setup {}
+        lspconfig.rust_analyzer.setup {}
     end
 }
