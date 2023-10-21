@@ -28,7 +28,7 @@ opt.wildmenu = true
 opt.wildmode = "longest:full,full"
 
 opt.number = true
--- opt.relativenumber = true
+opt.relativenumber = true
 
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"

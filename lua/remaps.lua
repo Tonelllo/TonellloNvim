@@ -102,16 +102,6 @@ wk.register({
 },
 { mode = 'v'})
 
-                -- Actions
-                map('n', '<leader>hS', gs.stage_buffer)
-                map('n', '<leader>hu', gs.undo_stage_hunk)
-                map('n', '<leader>hR', gs.reset_buffer)
-                map('n', '<leader>hp', gs.preview_hunk)
-                map('n', '<leader>hb', function() gs.blame_line { full = true } end)
-                map('n', '<leader>Tb', gs.toggle_current_line_blame)
-                map('n', '<leader>hd', gs.diffthis)
-                map('n', '<leader>hD', function() gs.diffthis('~') end)
-                map('n', '<leader>td', gs.toggle_deleted)
 tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
 -- after the language server attaches to the current buffer
