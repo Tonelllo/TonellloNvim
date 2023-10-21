@@ -1,36 +1,20 @@
 require "helpers/globals"
 require "helpers/keyboard"
-local inspect = require "helpers/inspect/inspect"
 
 nm("<leader>bsq", "<cmd>enew<bar>bd #<CR>")
 
-function dump(o)
-   if type(o) == 'table' then
-      local s = '{ '
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. dump(v) .. ','
-      end
-      return s .. '} '
-   else
-      return tostring(o)
-   end
-end
-
 function HowClose()
-    local tbl = fn.getbufinfo()
-    local count = 0
-    for _,v in pairs(tbl) do
-        if v.listed == 1 then
-            count = count + 1
-        end
-    end
-    if count > 1 then
-        cmd("bp")
-        cmd("bd #")
-    else
-        cmd("q")
-    end
+    api.nvim_exec([[
+        function! HowClose()
+            echo "hello"
+            if len(getbufinfo({'buflisted':1})) > 1
+                execute "bp"
+                execute "bd #"
+            else
+                execute ":q"
+                endif
+        endfunction
+    ]], false)
 end
 
 local wk = require("which-key")
@@ -52,7 +36,7 @@ wk.register({
             n = { "<cmd>bnext<CR>", "Next buffer" },
             p = { "<cmd>bprevious<CR>", "Previous buffer" },
             s = { "<cmd>w<CR>", "Save buffer" },
-            q = { HowClose, "Save and quit buffer" },
+            q = { "<cmd>wq<cr>", "Save and quit buffer" },
         },
         s = {
             name = "+Split",
@@ -65,7 +49,7 @@ wk.register({
             h = { "<c-w>h", "Go to the left split" },
             j = { "<c-w>j", "Go to the lower split" },
             k = { "<c-w>k", "Go to the higer split" },
-            q = { HowClose, "Save and quit window" },
+            q = { "<cmd>wq<CR>", "Save and quit window" },
         },
         t = {
             name = "+Telescope",
