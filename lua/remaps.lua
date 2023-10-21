@@ -1,7 +1,14 @@
 require "helpers/globals"
 require "helpers/keyboard"
 
-nm("<leader>bsq", "<cmd>enew<bar>bd #<CR>")
+local wk = require("which-key")
+local builtin = require('telescope.builtin')
+local tel = require('telescope')
+local gs = package.loaded.gitsigns
+local Terminal = require('toggleterm.terminal').Terminal
+local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
+
+tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
 function HowClose()
     api.nvim_exec([[
@@ -16,13 +23,6 @@ function HowClose()
         endfunction
     ]], false)
 end
-
-local wk = require("which-key")
-local builtin = require('telescope.builtin')
-local tel = require('telescope')
-local gs = package.loaded.gitsigns
-local Terminal = require('toggleterm.terminal').Terminal
-local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
 
 function _LAZYGIT_TOGGLE()
     lazygit:toggle()
