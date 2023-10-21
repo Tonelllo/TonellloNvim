@@ -1,10 +1,10 @@
 require "helpers/globals"
 require "helpers/keyboard"
 
-local wk = require("which-key")
-local builtin = require('telescope.builtin')
-local tel = require('telescope')
-local gs = package.loaded.gitsigns
+local wk       = require("which-key")
+local builtin  = require('telescope.builtin')
+local tel      = require('telescope')
+local gs       = package.loaded.gitsigns
 local Terminal = require('toggleterm.terminal').Terminal
 local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
 
@@ -70,42 +70,51 @@ wk.register({
             name = "+File",
             o = { function() vim.lsp.buf.format { async = true } end, "Format current file" }
         },
-        l = {"<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Open lazygit"},
+        l = { "<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Open lazygit" },
         D = {
             name = "+Diagnostics",
-            o = {vim.diagnostic.open_float, "Open diagnostic float"},
-            p = {vim.diagnostic.goto_prev, "Go to previous diagnostic"},
-            n = {vim.diagnostic.goto_next, "Go to next diagnostic"},
-            l = {vim.diagnostic.setloclist, "Set local list"},
+            o = { vim.diagnostic.open_float, "Open diagnostic float" },
+            p = { vim.diagnostic.goto_prev, "Go to previous diagnostic" },
+            n = { vim.diagnostic.goto_next, "Go to next diagnostic" },
+            l = { vim.diagnostic.setloclist, "Set local list" },
         },
         g = {
             name = "+Gitsigns",
-            s = {gs.stage_hunk, "Stage hunk"},
-            r = {gs.reset_hunk, "Reset hunk"},
-            S = {gs.stage_buffer, "Stage buffer"},
-            h = {gs.undo_stage_hunk, "Unstage hunk"},
-            R = {gs.reset_buffer, "Reset buffer"},
-            p = {gs.preview_hunk, "Preview hunk"},
-            b = {function() gs.blame_line { full = true } end, "Line blame"},
-            B = {gs.toglge_cunnent_line_blame, "Toggle blame"},
-            d = {gs.diffthis, "Diff this"},
-            D = {function() gs.diffthis('~') end, "Diff this"},
-            t = {gs.toggle_deleted, "Toggle deleted"}
+            s = { gs.stage_hunk, "Stage hunk" },
+            r = { gs.reset_hunk, "Reset hunk" },
+            S = { gs.stage_buffer, "Stage buffer" },
+            h = { gs.undo_stage_hunk, "Unstage hunk" },
+            R = { gs.reset_buffer, "Reset buffer" },
+            p = { gs.preview_hunk, "Preview hunk" },
+            b = { function() gs.blame_line { full = true } end, "Line blame" },
+            B = { gs.toglge_cunnent_line_blame, "Toggle blame" },
+            d = { gs.diffthis, "Diff this" },
+            D = { function() gs.diffthis('~') end, "Diff this" },
+            t = { gs.toggle_deleted, "Toggle deleted" }
+        },
+        c = {
+            name = "+Cmake",
+            r = { "<cmd>CMakeRun<cr>", "Cmake run" },
+            b = { "<cmd>CMakeBuild<cr>", "Cmake build" },
+            c = { "<cmd>CMakeClean<cr>", "Cmake clean" },
+            I = { "<cmd>CMakeInstall<cr>", "Cmake install" },
+            d = { "<cmd>CMakeDebug<cr>", "Cmake debug" },
+            t = { "<cmd>CMakeSelectBuildType", "Cmake select build type" }
         }
     }
 })
 
 -- mapping for visual mode
 wk.register({
-    ["<leader>"] = {
-        g = {
-            name = "+Gitsigns",
-            s = {function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "Stage hunk"},
-            r = {function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "Stage hunk"}
+        ["<leader>"] = {
+            g = {
+                name = "+Gitsigns",
+                s = { function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "Stage hunk" },
+                r = { function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "Stage hunk" }
+            }
         }
-    }
-},
-{ mode = 'v'})
+    },
+    { mode = 'v' })
 
 
 -- after the language server attaches to the current buffer

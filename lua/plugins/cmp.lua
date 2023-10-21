@@ -137,5 +137,6 @@ return {
         lspconfig.clangd.setup {}
         lspconfig.bashls.setup {}
         lspconfig.rust_analyzer.setup {}
+        lspconfig.cmake.setup {}
     end
 }
