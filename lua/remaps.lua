@@ -11,17 +11,19 @@ local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "flo
 tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
 function HowClose()
-    api.nvim_exec([[
-        function! HowClose()
-            echo "hello"
-            if len(getbufinfo({'buflisted':1})) > 1
-                execute "bp"
-                execute "bd #"
-            else
-                execute ":q"
-                endif
-        endfunction
-    ]], false)
+    local tbl = fn.getbufinfo()
+    local count = 0
+    for _,v in pairs(tbl) do
+        if v.listed == 1 then
+            count = count + 1
+        end
+    end
+    if count > 1 then
+        cmd("bp")
+        cmd("bd #")
+    else
+        cmd("q")
+    end
 end
 
 function _LAZYGIT_TOGGLE()
@@ -41,7 +43,7 @@ wk.register({
             n = { "<cmd>bnext<CR>", "Next buffer" },
             p = { "<cmd>bprevious<CR>", "Previous buffer" },
             s = { "<cmd>w<CR>", "Save buffer" },
-            q = { "<cmd>wq<cr>", "Save and quit buffer" },
+            q = { HowClose, "Save and quit buffer" },
         },
         s = {
             name = "+Split",
@@ -54,7 +56,7 @@ wk.register({
             h = { "<c-w>h", "Go to the left split" },
             j = { "<c-w>j", "Go to the lower split" },
             k = { "<c-w>k", "Go to the higer split" },
-            q = { "<cmd>wq<CR>", "Save and quit window" },
+            q = { HowClose, "Save and quit window" },
         },
         t = {
             name = "+Telescope",
