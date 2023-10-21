@@ -1,7 +1,14 @@
 require "helpers/globals"
 require "helpers/keyboard"
 
-nm("<leader>bsq", "<cmd>enew<bar>bd #<CR>")
+local wk = require("which-key")
+local builtin = require('telescope.builtin')
+local tel = require('telescope')
+local gs = package.loaded.gitsigns
+local Terminal = require('toggleterm.terminal').Terminal
+local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
+
+tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
 function HowClose()
     api.nvim_exec([[
@@ -17,13 +24,6 @@ function HowClose()
     ]], false)
 end
 
-local wk = require("which-key")
-local builtin = require('telescope.builtin')
-local tel = require('telescope')
-local gs = package.loaded.gitsigns
-local Terminal = require('toggleterm.terminal').Terminal
-local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
-
 function _LAZYGIT_TOGGLE()
     lazygit:toggle()
 end
@@ -31,6 +31,11 @@ end
 -- mappings for normal mode
 wk.register({
     ["<leader>"] = {
+        a = {
+            name = "+Dap",
+            b = { "<cmd>lua require'dap'.toggle_breakpoint()<CR>", "Toggle breakpoint" },
+            r = { "<cmd>lua require'dap'.continue()<CR>", "Start debugger" },
+        },
         b = {
             name = "+Buffer",
             n = { "<cmd>bnext<CR>", "Next buffer" },
@@ -102,7 +107,6 @@ wk.register({
 },
 { mode = 'v'})
 
-tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
