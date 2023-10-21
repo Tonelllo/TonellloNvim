@@ -12,6 +12,7 @@ return {
             version = '2.*',
             config = function()
                 require 'window-picker'.setup({
+                    selection_chars = 'ABCDEFGHIJKLMNOPQR',
                     filter_rules = {
                         include_current_win = false,
                         autoselect_one = true,
@@ -29,6 +30,7 @@ return {
     },
     config = function()
         require('neo-tree').setup({
+            close_if_last_window = true,
             window = {
                 width = 30,
                 mappings = {

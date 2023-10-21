@@ -20,6 +20,7 @@ end
 local wk = require("which-key")
 local builtin = require('telescope.builtin')
 local tel = require('telescope')
+local gs = package.loaded.gitsigns
 local Terminal = require('toggleterm.terminal').Terminal
 local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
 
@@ -27,6 +28,7 @@ function _LAZYGIT_TOGGLE()
     lazygit:toggle()
 end
 
+-- mappings for normal mode
 wk.register({
     ["<leader>"] = {
         b = {
@@ -38,8 +40,8 @@ wk.register({
         },
         s = {
             name = "+Split",
-            v = { "<cmd>vertical split<CR>" },
-            o = { "<cmd>split<CR>" }
+            v = { "<cmd>vertical split<CR>", "Vertical split" },
+            o = { "<cmd>split<CR>", "Horizzontal Split" }
         },
         w = {
             name = "+Window",
@@ -58,7 +60,7 @@ wk.register({
             n = { tel.extensions.notify.notify, "Telescope find notifications" },
             o = { tel.extensions.notify.notify, "Telescope find notifications" }
         },
-        n = { "<cmd>Neotree toggle<cr>", "Toggle neotree" },
+        n = { "<cmd>Neotree toggle show<cr>", "Toggle neotree" },
         f = {
             name = "+File",
             o = { function() vim.lsp.buf.format { async = true } end, "Format current file" }
@@ -70,10 +72,46 @@ wk.register({
             p = {vim.diagnostic.goto_prev, "Go to previous diagnostic"},
             n = {vim.diagnostic.goto_next, "Go to next diagnostic"},
             l = {vim.diagnostic.setloclist, "Set local list"},
+        },
+        g = {
+            name = "+Gitsigns",
+            s = {gs.stage_hunk, "Stage hunk"},
+            r = {gs.reset_hunk, "Reset hunk"},
+            S = {gs.stage_buffer, "Stage buffer"},
+            h = {gs.undo_stage_hunk, "Unstage hunk"},
+            R = {gs.reset_buffer, "Reset buffer"},
+            p = {gs.preview_hunk, "Preview hunk"},
+            b = {function() gs.blame_line { full = true } end, "Line blame"},
+            B = {gs.toglge_cunnent_line_blame, "Toggle blame"},
+            d = {gs.diffthis, "Diff this"},
+            D = {function() gs.diffthis('~') end, "Diff this"},
+            t = {gs.toggle_deleted, "Toggle deleted"}
         }
     }
 })
 
+-- mapping for visual mode
+wk.register({
+    ["<leader>"] = {
+        g = {
+            name = "+Gitsigns",
+            s = {function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "Stage hunk"},
+            r = {function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "Stage hunk"}
+        }
+    }
+},
+{ mode = 'v'})
+
+                -- Actions
+                map('n', '<leader>hS', gs.stage_buffer)
+                map('n', '<leader>hu', gs.undo_stage_hunk)
+                map('n', '<leader>hR', gs.reset_buffer)
+                map('n', '<leader>hp', gs.preview_hunk)
+                map('n', '<leader>hb', function() gs.blame_line { full = true } end)
+                map('n', '<leader>Tb', gs.toggle_current_line_blame)
+                map('n', '<leader>hd', gs.diffthis)
+                map('n', '<leader>hD', function() gs.diffthis('~') end)
+                map('n', '<leader>td', gs.toggle_deleted)
 tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
 -- after the language server attaches to the current buffer

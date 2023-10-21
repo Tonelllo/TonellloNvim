@@ -2,6 +2,7 @@ require "helpers/globals"
 require "helpers/keyboard"
 
 vim.cmd[[colorscheme neon]]
+-- vim.cmd[[colorscheme nord]]
 
 cmd[[filetype plugin on]]
 
@@ -35,3 +36,5 @@ opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldenable = false
 
 opt.termguicolors = true
+
+opt.scrolloff = 10
