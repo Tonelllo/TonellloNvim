@@ -13,7 +13,7 @@ tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 function HowClose()
     local tbl = fn.getbufinfo()
     local count = 0
-    for _,v in pairs(tbl) do
+    for _, v in pairs(tbl) do
         if v.listed == 1 then
             count = count + 1
         end
@@ -37,6 +37,7 @@ wk.register({
             name = "+Dap",
             b = { "<cmd>lua require'dap'.toggle_breakpoint()<CR>", "Toggle breakpoint" },
             r = { "<cmd>lua require'dap'.continue()<CR>", "Start debugger" },
+            c = { "<cmd>lua require'dap'.close()<cr>", "Close debugging windows" }
         },
         b = {
             name = "+Buffer",
@@ -73,7 +74,7 @@ wk.register({
             o = { function() vim.lsp.buf.format { async = true } end, "Format current file" }
         },
         l = { "<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Open lazygit" },
-        D = {
+        d = {
             name = "+Diagnostics",
             o = { vim.diagnostic.open_float, "Open diagnostic float" },
             p = { vim.diagnostic.goto_prev, "Go to previous diagnostic" },
