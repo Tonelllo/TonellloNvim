@@ -6,7 +6,8 @@ return {
     config = function()
         require('lualine').setup {
             options = {
-                theme = 'neon'
+                theme = 'catppuccin-frappe',
+                globalstatus = true
             }
         }
     end

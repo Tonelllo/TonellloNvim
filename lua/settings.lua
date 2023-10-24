@@ -1,8 +1,12 @@
 require "helpers/globals"
 require "helpers/keyboard"
 
-vim.cmd[[colorscheme neon]]
+-- vim.cmd[[colorscheme neon]]
 -- vim.cmd[[colorscheme nord]]
+cmd[[colorscheme catppuccin-frappe]]
+
+-- changing line numbers color
+api.nvim_set_hl(0, 'LineNr', {fg='lightgray'})
 
 cmd[[filetype plugin on]]
 
@@ -38,3 +42,7 @@ opt.foldenable = false
 opt.termguicolors = true
 
 opt.scrolloff = 10
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
