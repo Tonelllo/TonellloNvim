@@ -10,6 +10,11 @@ return {
             type = 'executable',
             command = '/home/tonello/.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
         }
+        dap.adapters.python = {
+            type = 'executable';
+            command = os.getenv('HOME') .. '/.local/share/nvim/mason/packages/debugpy/venv/bin/python';
+            args = { '-m', 'debugpy.adapter' };
+        }
         dap.configurations.c = {
             {
                 name = "Launch file",
@@ -46,6 +51,17 @@ return {
                         ignoreFailures = false
                     },
                 },
+            },
+        }
+        dap.configurations.python = {
+            {
+                type = 'python',
+                request = 'launch',
+                name = "Launch file",
+                program = "${file}",
+                pythonPath = function()
+                    return '/usr/bin/python3'
+                end,
             },
         }
 
