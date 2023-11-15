@@ -138,5 +138,7 @@ return {
         lspconfig.bashls.setup {}
         lspconfig.rust_analyzer.setup {}
         lspconfig.cmake.setup {}
+        -- lspconfig.texlab.setup{}
+        lspconfig.ltex.setup{}
     end
 }

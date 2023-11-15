@@ -116,9 +116,14 @@ wk.register({
             n = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Lspsaga next diagnostic" },
             p = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Lspsaga prev diagnostic" },
         },
-        o = {"<cmd>Lspsaga outline<cr>", "Lspsaga open outline"}
+        o = {"<cmd>Lspsaga outline<cr>", "Lspsaga open outline"},
     }
 })
+
+-- keep the highlight while moving the indent
+vm('>',">gv")
+vm('<',"<gv")
+
 wk.register({
     K = {"<cmd>Lspsaga hover_doc<cr>", "Lspsaga hover doc"}
 })
