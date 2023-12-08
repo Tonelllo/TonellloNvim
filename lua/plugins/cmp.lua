@@ -140,5 +140,6 @@ return {
         lspconfig.cmake.setup {}
         -- lspconfig.texlab.setup{}
         lspconfig.ltex.setup{}
+        lspconfig.ruby_ls.setup{}
     end
 }

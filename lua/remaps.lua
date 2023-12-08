@@ -117,6 +117,7 @@ wk.register({
             p = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Lspsaga prev diagnostic" },
         },
         o = {"<cmd>Lspsaga outline<cr>", "Lspsaga open outline"},
+        F = {"<cmd>NvimTreeFocus<cr>", "Neotree focus"},
     }
 })
 
@@ -125,8 +126,10 @@ vm('>',">gv")
 vm('<',"<gv")
 
 wk.register({
-    K = {"<cmd>Lspsaga hover_doc<cr>", "Lspsaga hover doc"}
+    K = {"<cmd>Lspsaga hover_doc<cr>", "Lspsaga hover doc"},
+    ["<F5>"] = {"<cmd>Jaq %<cr>", "Quickrun"};
 })
+
 
 -- mapping for visual mode
 wk.register({
