@@ -11,6 +11,7 @@ api.nvim_set_hl(0, 'LineNr', { fg = 'lightgray' })
 cmd [[filetype plugin on]]
 
 opt.completeopt = "menu,menuone,noselect"
+opt.cursorline = true
 opt.conceallevel = 3   -- hide italic and bold markup
 
 opt.signcolumn = "yes" -- keep the sign column

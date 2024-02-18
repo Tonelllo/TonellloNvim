@@ -4,7 +4,6 @@ require "helpers/keyboard"
 local wk       = require("which-key")
 local builtin  = require('telescope.builtin')
 local tel      = require('telescope')
-local gs       = package.loaded.gitsigns
 local Terminal = require('toggleterm.terminal').Terminal
 local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
 
@@ -81,20 +80,6 @@ wk.register({
         --     n = { vim.diagnostic.goto_next, "Go to next diagnostic" },
         --     l = { vim.diagnostic.setloclist, "Set local list" },
         -- },
-        g = {
-            name = "+Gitsigns",
-            s = { gs.stage_hunk, "Stage hunk" },
-            r = { gs.reset_hunk, "Reset hunk" },
-            S = { gs.stage_buffer, "Stage buffer" },
-            h = { gs.undo_stage_hunk, "Unstage hunk" },
-            R = { gs.reset_buffer, "Reset buffer" },
-            p = { gs.preview_hunk, "Preview hunk" },
-            b = { function() gs.blame_line { full = true } end, "Line blame" },
-            B = { gs.toglge_cunnent_line_blame, "Toggle blame" },
-            d = { gs.diffthis, "Diff this" },
-            D = { function() gs.diffthis('~') end, "Diff this" },
-            t = { gs.toggle_deleted, "Toggle deleted" }
-        },
         c = {
             name = "+Cmake",
             -- r = { "<cmd>CMakeRun<cr>", "Cmake run" },
@@ -116,32 +101,22 @@ wk.register({
             n = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Lspsaga next diagnostic" },
             p = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Lspsaga prev diagnostic" },
         },
-        o = {"<cmd>Lspsaga outline<cr>", "Lspsaga open outline"},
-        F = {"<cmd>NvimTreeFocus<cr>", "Neotree focus"},
+        o = { "<cmd>Lspsaga outline<cr>", "Lspsaga open outline" },
+        F = { "<cmd>NvimTreeFocus<cr>", "Neotree focus" },
     }
 })
 
 -- keep the highlight while moving the indent
-vm('>',">gv")
-vm('<',"<gv")
+vm('>', ">gv")
+vm('<', "<gv")
 
 wk.register({
-    K = {"<cmd>Lspsaga hover_doc<cr>", "Lspsaga hover doc"},
-    ["<F5>"] = {"<cmd>Jaq %<cr>", "Quickrun"};
+    K = { "<cmd>Lspsaga hover_doc<cr>", "Lspsaga hover doc" },
+    ["<F8>"] = { function()
+        cmd("w")
+        cmd("!ruby %")
+    end, "Quickrun" },
 })
-
-
--- mapping for visual mode
-wk.register({
-        ["<leader>"] = {
-            g = {
-                name = "+Gitsigns",
-                s = { function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "Stage hunk" },
-                r = { function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "Stage hunk" }
-            }
-        }
-    },
-    { mode = 'v' })
 
 
 -- after the language server attaches to the current buffer

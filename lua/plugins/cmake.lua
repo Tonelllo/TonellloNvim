@@ -34,6 +34,7 @@ return {
                         show = "always", -- "always", "only_on_error"
                         position = "belowright", -- "bottom", "top"
                         size = 10,
+                        auto_close_when_success = false,
                     },
                     overseer = {
                         new_task_opts = {}, -- options to pass into the `overseer.new_task` command
