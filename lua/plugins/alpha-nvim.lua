@@ -16,5 +16,11 @@ return {
             "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
             "                                                     ",
         }
+        dashboard.section.buttons.val = {
+            dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+            dashboard.button("SPC t f", "󰈞  Find file"),
+            dashboard.button("SPC t g", "󰈬  Find word"),
+            dashboard.button("q", "󰅚  Quit NVIM", ":qa<CR>"),
+        }
     end
 }

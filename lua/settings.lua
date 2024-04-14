@@ -61,6 +61,8 @@ opt.termguicolors = true
 
 opt.scrolloff = 10
 
+opt.cmdheight = 0
+
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 

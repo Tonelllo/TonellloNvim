@@ -5,7 +5,9 @@ local wk       = require("which-key")
 local builtin  = require('telescope.builtin')
 local tel      = require('telescope')
 local Terminal = require('toggleterm.terminal').Terminal
+local nvimTree = require('nvim-tree.api')
 local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
+local flash    = require('flash')
 
 tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
@@ -23,6 +25,14 @@ function HowClose()
     else
         cmd("q")
     end
+end
+
+local function getTreePath()
+    local node = nvimTree.tree.get_nodes()
+    if node == nil then
+        return "~"
+    end
+    return node.absolute_path
 end
 
 function _LAZYGIT_TOGGLE()
@@ -60,12 +70,11 @@ wk.register({
         },
         t = {
             name = "+Telescope",
-            f = { builtin.find_files, "Telescope find file" },
-            g = { builtin.live_grep, "Telescope grep" },
+            f = { function() builtin.find_files({ cwd = getTreePath() }) end, "Telescope find file" },
+            g = { function() builtin.live_grep({cwd = getTreePath()}) end, "Telescope grep" },
             b = { builtin.buffers, "Telescope find buffer" },
             h = { builtin.help_tags, "Telescope find tags" },
             n = { tel.extensions.notify.notify, "Telescope find notifications" },
-            o = { tel.extensions.notify.notify, "Telescope find notifications" }
         },
         n = { "<cmd>NvimTreeToggle<cr>", "Toggle neotree" },
         f = {
@@ -88,6 +97,12 @@ wk.register({
             I = { "<cmd>CMakeInstall<cr>", "Cmake install" },
             d = { "<cmd>CMakeDebug<cr>", "Cmake debug" },
             t = { "<cmd>CMakeSelectBuildType<cr>", "Cmake select build type" }
+        },
+        h = {
+            name = "+Flash",
+            s = { flash.jump, "Flash jump" },
+            t = { flash.treesitter, "Flash treesitter" },
+            f = { flash.treesitter_search, "Flash treesitter search" },
         },
         rn = { "<cmd>Lspsaga rename<cr>", "Rename file" },
         ca = { "<cmd>Lspsaga code_action<cr>", "Code action" },
