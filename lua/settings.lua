@@ -69,3 +69,7 @@ vim.g.loaded_netrwPlugin = 1
 if vim.fn.has("nvim-0.10") == 1 then
     opt.smoothscroll = true
 end
+
+if vim.g.neovide then
+    opt.guifont = "CaskaydiaCove Nerd Font Mono:h18"
+end

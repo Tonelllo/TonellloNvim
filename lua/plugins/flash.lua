@@ -17,11 +17,12 @@ return {
                 }
             },
             char = {
+                enabled = false,
                 highlight = {
-                    backdrop = false
+                    backdrop = true,
                 }
             }
-        }
+        },
     },
     -- stylua: ignore
 }

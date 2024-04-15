@@ -104,6 +104,11 @@ wk.register({
             t = { flash.treesitter, "Flash treesitter" },
             f = { flash.treesitter_search, "Flash treesitter search" },
         },
+        T = {
+            name = "+Tabs",
+            n = {"<cmd>tabnew<cr>", "Open a new tab"},
+            c = {"<cmd>tabclose<cr>", "Close tab"},
+        },
         rn = { "<cmd>Lspsaga rename<cr>", "Rename file" },
         ca = { "<cmd>Lspsaga code_action<cr>", "Code action" },
         pd = { "<cmd>Lspsaga peek_definition<cr>", "Lspsaga peek definition" },
