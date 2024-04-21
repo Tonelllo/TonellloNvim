@@ -3,12 +3,13 @@ local h = require("null-ls.helpers")
 -- https://github.com/nvimtools/none-ls.nvim/blob/88821b67e6007041f43b802f58e3d9fa9bfce684/lua/null-ls/builtins/diagnostics/tfsec.lua#L26
 
 local pddl_diag = {
+    name = "pddl diagnostics",
     method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
     filetypes = { "pddl" },
     generator = null_ls.generator({
         command = "pddl",
         args = function()
-            local filetype = (vim.fn.expand('%'):gsub(".pddl", ""))
+            local filetype = (vim.fn.expand("%")):match([[(%w*)%.pddl]]);
             return { filetype, "$FILENAME" }
         end,
         from_stderr = true,
@@ -33,11 +34,24 @@ local pddl_diag = {
             table.insert(diagnostics, {
                 row = _row,
                 col = _col,
-                message = _message -- :gsub("\n", " ")
+                message = _message
             })
             done(diagnostics)
         end
     }),
 }
+local pddl_format = {
+    name = "pddl formatting",
+    method = null_ls.methods.FORMATTING,
+    filetypes = { "pddl" },
+    generator = null_ls.formatter({
+        command = "pddl",
+        args = function()
+            local filetype = (vim.fn.expand("%")):match([[(%w*)%.pddl]]);
+            return { filetype, "$FILENAME" }
+        end,
+    })
+}
 
 null_ls.register(pddl_diag)
+null_ls.register(pddl_format)

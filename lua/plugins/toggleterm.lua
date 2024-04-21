@@ -14,6 +14,12 @@ return {
             direction = 'horizontal',
             close_on_exit = true,
             shell = vim.o.shell,
+            on_create = function(term)
+                if (vim.fn.expand('#')):find(".pddl") ~= nil then
+                    -- term.cmd = "planutils activate"
+                    cmd([[TermExec cmd="planutils activate"]])
+                end
+            end
         })
     end
 }

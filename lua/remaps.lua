@@ -90,7 +90,9 @@ wk.register({
             h = { builtin.help_tags, "Telescope find tags" },
             n = { tel.extensions.notify.notify, "Telescope find notifications" },
         },
-        n = { function () TreeToggleBarBar(); cmd("NvimTreeToggle"); end, "Toggle neotree" },
+        n = { function()
+            TreeToggleBarBar(); cmd("NvimTreeToggle");
+        end, "Toggle neotree" },
         f = {
             name = "+File",
             o = { function() vim.lsp.buf.format { async = true } end, "Format current file" }
@@ -120,8 +122,10 @@ wk.register({
         },
         T = {
             name = "+Tabs",
-            n = { "<cmd>tabnew<cr>", "Open a new tab" },
+            t = { "<cmd>tabnew<cr>", "Open a new tab" },
             c = { "<cmd>tabclose<cr>", "Close tab" },
+            n = { "<cmd>tabnext<cr>", "Next tab" },
+            p = { "<cmd>tabprevious<cr>", "Previous tab" },
         },
         rn = { "<cmd>Lspsaga rename<cr>", "Rename file" },
         ca = { "<cmd>Lspsaga code_action<cr>", "Code action" },
@@ -147,8 +151,14 @@ vm('<', "<gv")
 wk.register({
     K = { "<cmd>Lspsaga hover_doc<cr>", "Lspsaga hover doc" },
     ["<F8>"] = { function()
-        cmd("w")
-        cmd("!ruby %")
+        local ft = vim.bo.filetype
+        if ft == 'ruby' then
+            cmd("w")
+            cmd("!ruby %")
+        elseif ft == 'pddl' then
+            cmd("w")
+            cmd([[TermExec cmd="popf domain.pddl problem.pddl"]])
+        end
     end, "Quickrun" },
 })
 
