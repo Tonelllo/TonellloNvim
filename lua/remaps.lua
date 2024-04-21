@@ -8,10 +8,11 @@ local Terminal = require('toggleterm.terminal').Terminal
 local nvimTree = require('nvim-tree.api')
 local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
 local flash    = require('flash')
+local barbar   = require('barbar.api')
 
 tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
-function HowClose()
+local function HowClose()
     local tbl = fn.getbufinfo()
     local count = 0
     for _, v in pairs(tbl) do
@@ -35,6 +36,14 @@ local function getTreePath()
     return node.absolute_path
 end
 
+local function TreeToggleBarBar()
+    if not nvimTree.tree.is_visible() then
+        barbar.set_offset(30, 'NvimTree')
+    else
+        barbar.set_offset(0)
+    end
+end
+
 function _LAZYGIT_TOGGLE()
     lazygit:toggle()
 end
@@ -52,8 +61,13 @@ wk.register({
             name = "+Buffer",
             n = { "<cmd>bnext<CR>", "Next buffer" },
             p = { "<cmd>bprevious<CR>", "Previous buffer" },
+            N = { "<cmd>BufferMoveNext<CR>", "Move to next buffer" },
+            P = { "<cmd>BufferMovePrevious<CR>", "Move to previous buffer" },
             s = { "<cmd>w<CR>", "Save buffer" },
             k = { HowClose, "Save and quit buffer" },
+            r = { "<cmd>BufferRestore<cr>", "Restore closed buffer" },
+            b = { "<cmd>BufferPick<cr>", "Pick a buffer" },
+            D = { "<cmd>BufferPickDelete<cr>", "Delete a selected buffer" }
         },
         s = {
             name = "+Split",
@@ -71,12 +85,12 @@ wk.register({
         t = {
             name = "+Telescope",
             f = { function() builtin.find_files({ cwd = getTreePath() }) end, "Telescope find file" },
-            g = { function() builtin.live_grep({cwd = getTreePath()}) end, "Telescope grep" },
+            g = { function() builtin.live_grep({ cwd = getTreePath() }) end, "Telescope grep" },
             b = { builtin.buffers, "Telescope find buffer" },
             h = { builtin.help_tags, "Telescope find tags" },
             n = { tel.extensions.notify.notify, "Telescope find notifications" },
         },
-        n = { "<cmd>NvimTreeToggle<cr>", "Toggle neotree" },
+        n = { function () TreeToggleBarBar(); cmd("NvimTreeToggle"); end, "Toggle neotree" },
         f = {
             name = "+File",
             o = { function() vim.lsp.buf.format { async = true } end, "Format current file" }
@@ -106,8 +120,8 @@ wk.register({
         },
         T = {
             name = "+Tabs",
-            n = {"<cmd>tabnew<cr>", "Open a new tab"},
-            c = {"<cmd>tabclose<cr>", "Close tab"},
+            n = { "<cmd>tabnew<cr>", "Open a new tab" },
+            c = { "<cmd>tabclose<cr>", "Close tab" },
         },
         rn = { "<cmd>Lspsaga rename<cr>", "Rename file" },
         ca = { "<cmd>Lspsaga code_action<cr>", "Code action" },
