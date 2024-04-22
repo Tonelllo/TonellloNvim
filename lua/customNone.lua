@@ -2,6 +2,41 @@ local null_ls = require("null-ls")
 local h = require("null-ls.helpers")
 -- https://github.com/nvimtools/none-ls.nvim/blob/88821b67e6007041f43b802f58e3d9fa9bfce684/lua/null-ls/builtins/diagnostics/tfsec.lua#L26
 
+local pddl_plus_diag = {
+    name = "pddl diagnostics",
+    method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+    filetypes = { "pddl" },
+    generator = null_ls.generator({
+        command = "/home/tonello/Documents/Compilations/Val-20211204.1-Linux/bin/Parser",
+        args = {"domain.pddl", "problem.pddl"},
+        -- from_stderr = true,
+        format = "line",
+        multiple_files = true,
+        check_exit_code = function(code, stderr)
+            local success = code <= 1
+
+            if not success then
+                -- can be noisy for things that run often (e.g. diagnostics), but can
+                -- be useful for things that run on demand (e.g. formatting)
+                print(stderr)
+            end
+
+            return success
+        end,
+
+        on_output = h.diagnostics.from_pattern(
+            [[(.*): line: (%d*): (%w*): (.*)]],
+            { "filename", "row", "severity", "message" },
+            {
+                severities = {
+                    ["Error"] = h.diagnostics.severities.error,
+                    ["Warning"] = h.diagnostics.severities.warning,
+                }
+            }
+        )
+    }),
+
+}
 local pddl_diag = {
     name = "pddl diagnostics",
     method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
@@ -53,5 +88,6 @@ local pddl_format = {
     })
 }
 
-null_ls.register(pddl_diag)
+-- null_ls.register(pddl_diag)
+null_ls.register(pddl_plus_diag)
 null_ls.register(pddl_format)
