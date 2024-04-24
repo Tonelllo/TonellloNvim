@@ -5,48 +5,13 @@ local wk       = require("which-key")
 local builtin  = require('telescope.builtin')
 local tel      = require('telescope')
 local Terminal = require('toggleterm.terminal').Terminal
-local nvimTree = require('nvim-tree.api')
 local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
 local flash    = require('flash')
-local barbar   = require('barbar.api')
+local utils    = require("helpers.functions")
+local nvimTree = require('nvim-tree.api')
 
 tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
-local function HowClose()
-    local tbl = fn.getbufinfo()
-    local count = 0
-    for _, v in pairs(tbl) do
-        if v.listed == 1 then
-            count = count + 1
-        end
-    end
-    if count > 1 then
-        cmd("bp")
-        cmd("bd #")
-    else
-        cmd("q")
-    end
-end
-
-local function getTreePath()
-    local node = nvimTree.tree.get_nodes()
-    if node == nil then
-        return "~"
-    end
-    return node.absolute_path
-end
-
-local function TreeToggleBarBar()
-    if not nvimTree.tree.is_visible() then
-        barbar.set_offset(30, 'NvimTree')
-    else
-        barbar.set_offset(0)
-    end
-end
-
-function _LAZYGIT_TOGGLE()
-    lazygit:toggle()
-end
 
 -- mappings for normal mode
 wk.register({
@@ -64,7 +29,7 @@ wk.register({
             N = { "<cmd>BufferMoveNext<CR>", "Move to next buffer" },
             P = { "<cmd>BufferMovePrevious<CR>", "Move to previous buffer" },
             s = { "<cmd>w<CR>", "Save buffer" },
-            k = { HowClose, "Save and quit buffer" },
+            k = { utils.HowClose, "Save and quit buffer" },
             r = { "<cmd>BufferRestore<cr>", "Restore closed buffer" },
             b = { "<cmd>BufferPick<cr>", "Pick a buffer" },
             D = { "<cmd>BufferPickDelete<cr>", "Delete a selected buffer" }
@@ -84,20 +49,20 @@ wk.register({
         },
         t = {
             name = "+Telescope",
-            f = { function() builtin.find_files({ cwd = getTreePath() }) end, "Telescope find file" },
-            g = { function() builtin.live_grep({ cwd = getTreePath() }) end, "Telescope grep" },
+            f = { function() builtin.find_files({ cwd = utils.getTreePath() }) end, "Telescope find file" },
+            g = { function() builtin.live_grep({ cwd = utils.getTreePath() }) end, "Telescope grep" },
             b = { builtin.buffers, "Telescope find buffer" },
             h = { builtin.help_tags, "Telescope find tags" },
             n = { tel.extensions.notify.notify, "Telescope find notifications" },
         },
         n = { function()
-            TreeToggleBarBar(); cmd("NvimTreeToggle");
+            utils.TreeToggleBarBar(); nvimTree.tree.toggle({focus = false});
         end, "Toggle neotree" },
         f = {
             name = "+File",
             o = { function() vim.lsp.buf.format { async = true } end, "Format current file" }
         },
-        l = { "<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Open lazygit" },
+        l = { utils.lazygit_toggle, "Open lazygit" },
         -- d = {
         --     name = "+Diagnostics",
         --     o = { vim.diagnostic.open_float, "Open diagnostic float" },
@@ -141,6 +106,7 @@ wk.register({
         },
         o = { "<cmd>Lspsaga outline<cr>", "Lspsaga open outline" },
         F = { "<cmd>NvimTreeFocus<cr>", "Neotree focus" },
+        R = { "<cmd>so %<cr>", "Reload configuration file"}
     }
 })
 

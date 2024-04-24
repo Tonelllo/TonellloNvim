@@ -129,21 +129,5 @@ return {
         -- Set up lspconfig.
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-        local lspconfig = require('lspconfig')
-        --lspconfig.pyright.setup {}
-        lspconfig.pylsp.setup {}
-        lspconfig.lua_ls.setup {}
-        lspconfig.matlab_ls.setup {}
-        lspconfig.clangd.setup {}
-        lspconfig.bashls.setup {}
-        lspconfig.rust_analyzer.setup {}
-        lspconfig.cmake.setup {}
-        -- lspconfig.texlab.setup{}
-        lspconfig.solargraph.setup {}
-        lspconfig.ltex.setup {}
-        lspconfig.serve_d.setup {}
-        lspconfig.qmlls.setup {
-            cmd = { "/home/tonello/Qt/Tools/QtDesignStudio/qt6_design_studio_reduced_version/bin/qmlls" }
-        }
     end
 }
