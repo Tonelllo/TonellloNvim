@@ -1,7 +1,8 @@
 return {
     "rcarriga/nvim-dap-ui",
     dependencies = {
-        "mfussenegger/nvim-dap"
+        "mfussenegger/nvim-dap",
+        "nvim-neotest/nvim-nio"
     },
     config = function()
         local dap = require('dap')
@@ -11,9 +12,9 @@ return {
             command = '/home/tonello/.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
         }
         dap.adapters.python = {
-            type = 'executable';
-            command = os.getenv('HOME') .. '/.local/share/nvim/mason/packages/debugpy/venv/bin/python';
-            args = { '-m', 'debugpy.adapter' };
+            type = 'executable',
+            command = os.getenv('HOME') .. '/.local/share/nvim/mason/packages/debugpy/venv/bin/python',
+            args = { '-m', 'debugpy.adapter' },
         }
         dap.configurations.c = {
             {
