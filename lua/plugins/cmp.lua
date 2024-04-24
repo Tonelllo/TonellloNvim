@@ -139,11 +139,11 @@ return {
         lspconfig.rust_analyzer.setup {}
         lspconfig.cmake.setup {}
         -- lspconfig.texlab.setup{}
-        lspconfig.solargraph.setup{}
-        lspconfig.ltex.setup{}
-        lspconfig.serve_d.setup{}
-        lspconfig.qmlls.setup{
-            cmd = {"/home/tonello/Qt/Tools/QtDesignStudio/qt6_design_studio_reduced_version/bin/qmlls"}
+        lspconfig.solargraph.setup {}
+        lspconfig.ltex.setup {}
+        lspconfig.serve_d.setup {}
+        lspconfig.qmlls.setup {
+            cmd = { "/home/tonello/Qt/Tools/QtDesignStudio/qt6_design_studio_reduced_version/bin/qmlls" }
         }
     end
 }
