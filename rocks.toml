@@ -1,0 +1,42 @@
+# This is your rocks.nvim plugins declaration file.
+# Here is a small yet pretty detailed example on how to use it:
+#
+# [plugins]
+# nvim-treesitter = "semver_version"  # e.g. "1.0.0"
+
+# List of non-Neovim rocks.
+# This includes things like `toml` or other lua packages.
+[rocks]
+
+# List of Neovim plugins to install alongside their versions.
+# If the plugin name contains a dot then you must add quotes to the key name!
+[plugins]
+"rocks.nvim" = "2.25.0"
+"rocks-git.nvim" = "1.4.0"
+"which-key.nvim" = "1.6.0"
+"rocks-config.nvim" = "1.5.0"
+"kanagawa.nvim" = "scm"
+catpuccin = "1.7.0"
+alpha-nvim = "scm"
+"plenary.nvim" = "scm"
+"mason.nvim" = "1.10.0"
+"mason-lspconfig.nvim" = "1.28.0"
+nvim-cmp = "0.0.1"
+
+[plugins.nvim-tree]
+git = "nvim-tree/nvim-tree.lua"
+rev = "v1.3^{}"
+
+[plugins.nvim-web-devicons]
+git = "nvim-tree/nvim-web-devicons"
+rev = "v0.99"
+
+[plugins."barbar.nvim"]
+git = "romgrk/barbar.nvim"
+rev = "v1.7.0-beta.4"
+
+[plugins."cmake-tools.nvim"]
+git = "Civitasv/cmake-tools.nvim"
+
+[config]
+auto_setup = false
