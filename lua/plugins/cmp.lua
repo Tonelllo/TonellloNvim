@@ -128,6 +128,7 @@ return {
 
         -- Set up lspconfig.
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        require('lspconfig').matlab_ls.setup{}
 
     end
 }
