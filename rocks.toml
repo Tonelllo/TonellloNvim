@@ -22,6 +22,7 @@ alpha-nvim = "scm"
 "mason.nvim" = "1.10.0"
 "mason-lspconfig.nvim" = "1.28.0"
 nvim-cmp = "0.0.1"
+"image.nvim" = "1.3.0"
 
 [plugins.nvim-tree]
 git = "nvim-tree/nvim-tree.lua"
