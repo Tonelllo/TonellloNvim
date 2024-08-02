@@ -14,120 +14,103 @@ tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
 
 -- mappings for normal mode
-wk.register({
-    ["<leader>"] = {
-        a = {
-            name = "+Dap",
-            b = { "<cmd>lua require'dap'.toggle_breakpoint()<CR>", "Toggle breakpoint" },
-            r = { "<cmd>lua require'dap'.continue()<CR>", "Start debugger" },
-            c = { "<cmd>lua require'dap'.close()<cr>", "Close debugging windows" }
-        },
-        b = {
-            name = "+Buffer",
-            n = { "<cmd>bnext<CR>", "Next buffer" },
-            p = { "<cmd>bprevious<CR>", "Previous buffer" },
-            N = { "<cmd>BufferMoveNext<CR>", "Move to next buffer" },
-            P = { "<cmd>BufferMovePrevious<CR>", "Move to previous buffer" },
-            s = { "<cmd>w<CR>", "Save buffer" },
-            k = { utils.HowClose, "Save and quit buffer" },
-            r = { "<cmd>BufferRestore<cr>", "Restore closed buffer" },
-            b = { "<cmd>BufferPick<cr>", "Pick a buffer" },
-            D = { "<cmd>BufferPickDelete<cr>", "Delete a selected buffer" }
-        },
-        s = {
-            name = "+Split",
-            v = { "<cmd>vertical split<CR>", "Vertical split" },
-            o = { "<cmd>split<CR>", "Horizzontal Split" }
-        },
-        w = {
-            name = "+Window",
-            l = { "<c-w>l", "Go to the right split" },
-            h = { "<c-w>h", "Go to the left split" },
-            j = { "<c-w>j", "Go to the lower split" },
-            k = { "<c-w>k", "Go to the higer split" },
-            q = { "<cmd>q<cr>", "Save and quit window" },
-        },
-        t = {
-            name = "+Telescope",
-            f = { function() builtin.find_files({ cwd = utils.getTreePath() }) end, "Telescope find file" },
-            g = { function() builtin.live_grep({ cwd = utils.getTreePath() }) end, "Telescope grep" },
-            b = { builtin.buffers, "Telescope find buffer" },
-            h = { builtin.help_tags, "Telescope find tags" },
-            n = { tel.extensions.notify.notify, "Telescope find notifications" },
-        },
-        n = { function()
-            utils.TreeToggleBarBar(); nvimTree.tree.toggle({focus = false});
-        end, "Toggle neotree" },
-        f = {
-            name = "+File",
-            o = { function() vim.lsp.buf.format { async = true } end, "Format current file" }
-        },
-        l = { utils.lazygit_toggle, "Open lazygit" },
-        -- d = {
-        --     name = "+Diagnostics",
-        --     o = { vim.diagnostic.open_float, "Open diagnostic float" },
-        --     p = { vim.diagnostic.goto_prev, "Go to previous diagnostic" },
-        --     n = { vim.diagnostic.goto_next, "Go to next diagnostic" },
-        --     l = { vim.diagnostic.setloclist, "Set local list" },
-        -- },
-        c = {
-            name = "+Cmake",
-            -- r = { "<cmd>CMakeRun<cr>", "Cmake run" },
-            b = { "<cmd>CMakeBuild<cr>", "Cmake build" },
-            c = { "<cmd>CMakeClean<cr>", "Cmake clean" },
-            I = { "<cmd>CMakeInstall<cr>", "Cmake install" },
-            d = { "<cmd>CMakeDebug<cr>", "Cmake debug" },
-            t = { "<cmd>CMakeSelectBuildType<cr>", "Cmake select build type" }
-        },
-        h = {
-            name = "+Flash",
-            s = { flash.jump, "Flash jump" },
-            t = { flash.treesitter, "Flash treesitter" },
-            f = { flash.treesitter_search, "Flash treesitter search" },
-        },
-        T = {
-            name = "+Tabs",
-            t = { "<cmd>tabnew<cr>", "Open a new tab" },
-            c = { "<cmd>tabclose<cr>", "Close tab" },
-            n = { "<cmd>tabnext<cr>", "Next tab" },
-            p = { "<cmd>tabprevious<cr>", "Previous tab" },
-        },
-        rn = { "<cmd>Lspsaga rename<cr>", "Rename file" },
-        ca = { "<cmd>Lspsaga code_action<cr>", "Code action" },
-        pd = { "<cmd>Lspsaga peek_definition<cr>", "Lspsaga peek definition" },
-        gd = { "<cmd>Lspsaga goto_definition<cr>", "Lspsaga peek definition" },
-        pt = { "<cmd>Lspsaga peek_type_definition<cr>", "Lspsaga peek type definition" },
-        gt = { "<cmd>Lspsaga goto_type_definition<cr>", "Lspsaga goto type definition" },
-        d = {
-            name = "+Diagnostics",
-            o = { "<cmd>Lspsaga show_line_diagnostics<cr>", "Lspsaga show line diagnostic" },
-            n = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Lspsaga next diagnostic" },
-            p = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Lspsaga prev diagnostic" },
-        },
-        o = { "<cmd>Lspsaga outline<cr>", "Lspsaga open outline" },
-        F = { "<cmd>NvimTreeFocus<cr>", "Neotree focus" },
-        R = { "<cmd>so %<cr>", "Reload configuration file"}
+wk.add({
+    mode = { "n" },
+    { "<leader>a",  group = "Dap" },
+    { "<leader>ab", "<cmd>lua require'dap'.toggle_breakpoint()<CR>",  desc = "Toggle breakpoint" },
+    { "<leader>ar", "<cmd>lua require'dap'.continue()<CR>",           desc = "Start debugging" },
+    { "<leader>ac", "<cmd>lua require'dap'.close()<cr>",              desc = "Close dubgging windows" },
+
+    { "<leader>b",  group = "Buffer" },
+    { "<leader>bn", "<cmd>bnext<CR>",                                 desc = "Next buffer" },
+    { "<leader>bp", "<cmd>bprevious<CR>",                             desc = "Previous buffer" },
+    { "<leader>bN", "<cmd>BufferMoveNext<CR>",                        desc = "Move to next buffer" },
+    { "<leader>bP", "<cmd>BufferMovePrevious<CR>",                    desc = "Move to previous buffer" },
+    { "<leader>bs", "<cmd>w<CR>",                                     desc = "Save buffer" },
+    { "<leader>bk", utils.HowClose,                                   desc = "Save and quit buffer" },
+    { "<leader>br", "<cmd>BufferRestore<cr>",                         desc = "Restore closed buffer" },
+    { "<leader>bb", "<cmd>BufferPick<cr>",                            desc = "Pick a buffer" },
+    { "<leader>bD", "<cmd>BufferPickDelete<cr>",                      desc = "Delete a selected buffer" },
+
+    { "<leader>cb", "<cmd>CMakeBuild<cr>",                            desc = "Cmake build" },
+    { "<leader>cc", "<cmd>CMakeClean<cr>",                            desc = "Cmake clean" },
+    { "<leader>cI", "<cmd>CMakeInstall<cr>",                          desc = "Cmake install" },
+    { "<leader>cd", "<cmd>CMakeDebug<cr>",                            desc = "Cmake debug" },
+    { "<leader>ct", "<cmd>CMakeSelectBuildType<cr>",                  desc = "Cmake select builtd type" },
+
+    { "<leader>d",  group = "Diagnostics" },
+    { "<leader>do", "<cmd>Lspsaga show_line_diagnostics<cr>",         desc = "Lspsaga show live diagnostic" },
+    { "<leader>dn", "<cmd>Lspsaga diagnostic_jump_next<cr>",          desc = "Lspsaga next diagnostic" },
+    { "<leader>dp", "<cmd>Lspsaga diagnostic_jump_prev<cr>",          desc = "Lspsaga prev diagnostic" },
+
+    { "<leader>fo", function() vim.lsp.buf.format { async = true } end, desc = "Format current file" },
+
+    { "<leader>h",  group = "Flash" },
+    { "<leader>hs", flash.jump,                                       desc = "Flash jump" },
+    { "<leader>ht", flash.treesitter,                                 desc = "Flash treesitter" },
+    { "<leader>hf", flash.treesitter_search,                          desc = "Flash treesitter search" },
+
+    { "<leader>l",  utils.lazygit_toggle,                             desc = "OPen lazygit" },
+
+    {
+        "<leader>n",
+        function()
+            utils.TreeToggleBarBar(); nvimTree.tree.toggle({ focus = false });
+        end,
+        desc = "Toggle NvimTree"
+    },
+
+    { "<leader>s",  group = "Split" },
+    { "<leader>sv", "<cmd>vertical split<CR>",                                        desc = "Vertical split" },
+    { "<leader>so", "<cmd>split<CR>",                                                 desc = "Horizzontal Split" },
+
+    { "<leader>t",  group = "Telescope" },
+    { "<leader>tf", function() builtin.find_files({ cwd = utils.getTreePath() }) end, desc = "Telescope find file" },
+    { "<leader>tg", function() builtin.find_files({ cwd = utils.getTreePath() }) end, desc = "Telescope grep" },
+    { "<leader>tb", builtin.buffers,                                                  desc = "Telescope find buffer" },
+    { "<leader>th", builtin.help_tags,                                                desc = "Telescope find help" },
+    { "<leader>tn", tel.extensions.notify.notify,                                     desc = "Telescope find notifications" },
+
+    { "<leader>w",  proxy = "<c-w>",                                                  group = "Window" },
+    { "<leader>wq", "<cmd>q<cr>",                                                     desc = "Quit window" },
+
+    { "<leader>T",  group = "Tabs" },
+    { "<leader>Tt", "<cmd>tabnew<cr>",                                                desc = "Open a new tab" },
+    { "<leader>Tc", "<cmd>tabclose<cr>",                                              desc = "Close tab" },
+    { "<leader>Tn", "<cmd>tabnew<cr>",                                                desc = "Next tab" },
+    { "<leader>Tp", "<cmd>tabprevious<cr>",                                           desc = "Previous tab" },
+
+    -- Commands that have no group
+    { "<leader>o",  "<cmd>Lspsaga outline<cr>",                                       desc = "Lspsaga open outline" },
+    { "<leader>ca", "<cmd>Lspsaga code_action<cr>",                                   desc = "Code action" },
+    { "<leader>gd", "<cmd>Lspsaga goto_definition<cr>",                               desc = "Lspsaga goto definition" },
+    { "<leader>gt", "<cmd>Lspsaga goto_type_definition<cr>",                          desc = "Lspsaga goto type definition" },
+    { "<leader>pd", "<cmd>Lspsaga peek_definition<cr>",                               desc = "Lspsaga peek definition" },
+    { "<leader>pt", "<cmd>Lspsaga peek_type_definition<cr>",                          desc = "Lspsaga peek type definition" },
+    { "<leader>rn", "<cmd>Lspsaga rename<cr>",                                        desc = "Rename file" },
+    { "<leader>F",  "<cmd>NvimTreeFocus<cr>",                                         desc = "Neotree focus" },
+    { "<leader>K",  "<cmd>Lspsaga hove_doc<cr>",                                      desc = "Lspsaga hover doc" },
+    { "<leader>R",  "<cmd>so %<cr>",                                                  desc = "Rename file" },
+
+    {
+        "<F8>",
+        function()
+            local ft = vim.bo.filetype
+            if ft == 'ruby' then
+                cmd("w")
+                cmd("!ruby %")
+            elseif ft == 'pddl' then
+                cmd("w")
+                cmd([[TermExec cmd="popf domain.pddl problem.pddl"]])
+            end
+        end,
+        desc = "Quickrun"
     }
 })
 
 -- keep the highlight while moving the indent
 vm('>', ">gv")
 vm('<', "<gv")
-
-wk.register({
-    K = { "<cmd>Lspsaga hover_doc<cr>", "Lspsaga hover doc" },
-    ["<F8>"] = { function()
-        local ft = vim.bo.filetype
-        if ft == 'ruby' then
-            cmd("w")
-            cmd("!ruby %")
-        elseif ft == 'pddl' then
-            cmd("w")
-            cmd([[TermExec cmd="popf domain.pddl problem.pddl"]])
-        end
-    end, "Quickrun" },
-})
-
 
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {

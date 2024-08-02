@@ -3,7 +3,7 @@ return {
     config = function()
         local null_ls = require("null-ls")
         null_ls.setup({
-            debug = true
+            -- debug = true
             -- sources = {
             --     require('NoneCustom.pddl')
             -- },

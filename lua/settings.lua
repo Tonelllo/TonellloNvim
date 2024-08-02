@@ -61,6 +61,8 @@ opt.termguicolors = true
 
 opt.scrolloff = 10
 
+lsp.set_log_level("off")
+
 -- opt.cmdheight = 0
 
 vim.g.loaded_netrw = 1
