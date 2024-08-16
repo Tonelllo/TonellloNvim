@@ -13,44 +13,49 @@ local nvimTree = require('nvim-tree.api')
 tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
 
+-- mappings for terminal mode
+wk.add({
+    mode = "t",
+    {"<Esc>", [[<c-\><c-n>]], desc = "Exit terminal input"},
+})
 -- mappings for normal mode
 wk.add({
     mode = { "n" },
     { "<leader>a",  group = "Dap" },
-    { "<leader>ab", "<cmd>lua require'dap'.toggle_breakpoint()<CR>",  desc = "Toggle breakpoint" },
-    { "<leader>ar", "<cmd>lua require'dap'.continue()<CR>",           desc = "Start debugging" },
-    { "<leader>ac", "<cmd>lua require'dap'.close()<cr>",              desc = "Close dubgging windows" },
+    { "<leader>ab", "<cmd>lua require'dap'.toggle_breakpoint()<CR>",    desc = "Toggle breakpoint" },
+    { "<leader>ar", "<cmd>lua require'dap'.continue()<CR>",             desc = "Start debugging" },
+    { "<leader>ac", "<cmd>lua require'dap'.close()<cr>",                desc = "Close dubgging windows" },
 
     { "<leader>b",  group = "Buffer" },
-    { "<leader>bn", "<cmd>bnext<CR>",                                 desc = "Next buffer" },
-    { "<leader>bp", "<cmd>bprevious<CR>",                             desc = "Previous buffer" },
-    { "<leader>bN", "<cmd>BufferMoveNext<CR>",                        desc = "Move to next buffer" },
-    { "<leader>bP", "<cmd>BufferMovePrevious<CR>",                    desc = "Move to previous buffer" },
-    { "<leader>bs", "<cmd>w<CR>",                                     desc = "Save buffer" },
-    { "<leader>bk", utils.HowClose,                                   desc = "Save and quit buffer" },
-    { "<leader>br", "<cmd>BufferRestore<cr>",                         desc = "Restore closed buffer" },
-    { "<leader>bb", "<cmd>BufferPick<cr>",                            desc = "Pick a buffer" },
-    { "<leader>bD", "<cmd>BufferPickDelete<cr>",                      desc = "Delete a selected buffer" },
+    { "<leader>bn", "<cmd>bnext<CR>",                                   desc = "Next buffer" },
+    { "<leader>bp", "<cmd>bprevious<CR>",                               desc = "Previous buffer" },
+    { "<leader>bN", "<cmd>BufferMoveNext<CR>",                          desc = "Move to next buffer" },
+    { "<leader>bP", "<cmd>BufferMovePrevious<CR>",                      desc = "Move to previous buffer" },
+    { "<leader>bs", "<cmd>w<CR>",                                       desc = "Save buffer" },
+    { "<leader>bk", utils.HowClose,                                     desc = "Save and quit buffer" },
+    { "<leader>br", "<cmd>BufferRestore<cr>",                           desc = "Restore closed buffer" },
+    { "<leader>bb", "<cmd>BufferPick<cr>",                              desc = "Pick a buffer" },
+    { "<leader>bD", "<cmd>BufferPickDelete<cr>",                        desc = "Delete a selected buffer" },
 
-    { "<leader>cb", "<cmd>CMakeBuild<cr>",                            desc = "Cmake build" },
-    { "<leader>cc", "<cmd>CMakeClean<cr>",                            desc = "Cmake clean" },
-    { "<leader>cI", "<cmd>CMakeInstall<cr>",                          desc = "Cmake install" },
-    { "<leader>cd", "<cmd>CMakeDebug<cr>",                            desc = "Cmake debug" },
-    { "<leader>ct", "<cmd>CMakeSelectBuildType<cr>",                  desc = "Cmake select builtd type" },
+    { "<leader>cb", "<cmd>CMakeBuild<cr>",                              desc = "Cmake build" },
+    { "<leader>cc", "<cmd>CMakeClean<cr>",                              desc = "Cmake clean" },
+    { "<leader>cI", "<cmd>CMakeInstall<cr>",                            desc = "Cmake install" },
+    { "<leader>cd", "<cmd>CMakeDebug<cr>",                              desc = "Cmake debug" },
+    { "<leader>ct", "<cmd>CMakeSelectBuildType<cr>",                    desc = "Cmake select builtd type" },
 
     { "<leader>d",  group = "Diagnostics" },
-    { "<leader>do", "<cmd>Lspsaga show_line_diagnostics<cr>",         desc = "Lspsaga show live diagnostic" },
-    { "<leader>dn", "<cmd>Lspsaga diagnostic_jump_next<cr>",          desc = "Lspsaga next diagnostic" },
-    { "<leader>dp", "<cmd>Lspsaga diagnostic_jump_prev<cr>",          desc = "Lspsaga prev diagnostic" },
+    { "<leader>do", "<cmd>Lspsaga show_line_diagnostics<cr>",           desc = "Lspsaga show live diagnostic" },
+    { "<leader>dn", "<cmd>Lspsaga diagnostic_jump_next<cr>",            desc = "Lspsaga next diagnostic" },
+    { "<leader>dp", "<cmd>Lspsaga diagnostic_jump_prev<cr>",            desc = "Lspsaga prev diagnostic" },
 
     { "<leader>fo", function() vim.lsp.buf.format { async = true } end, desc = "Format current file" },
 
     { "<leader>h",  group = "Flash" },
-    { "<leader>hs", flash.jump,                                       desc = "Flash jump" },
-    { "<leader>ht", flash.treesitter,                                 desc = "Flash treesitter" },
-    { "<leader>hf", flash.treesitter_search,                          desc = "Flash treesitter search" },
+    { "<leader>hs", flash.jump,                                         desc = "Flash jump" },
+    { "<leader>ht", flash.treesitter,                                   desc = "Flash treesitter" },
+    { "<leader>hf", flash.treesitter_search,                            desc = "Flash treesitter search" },
 
-    { "<leader>l",  utils.lazygit_toggle,                             desc = "OPen lazygit" },
+    { "<leader>l",  utils.lazygit_toggle,                               desc = "OPen lazygit" },
 
     {
         "<leader>n",
@@ -65,11 +70,15 @@ wk.add({
     { "<leader>so", "<cmd>split<CR>",                                                 desc = "Horizzontal Split" },
 
     { "<leader>t",  group = "Telescope" },
-    { "<leader>tf", function() builtin.find_files({ cwd = utils.getTreePath() }) end, desc = "Telescope find file" },
-    { "<leader>tg", function() builtin.find_files({ cwd = utils.getTreePath() }) end, desc = "Telescope grep" },
     { "<leader>tb", builtin.buffers,                                                  desc = "Telescope find buffer" },
+    { "<leader>tc", builtin.command_history,                                          desc = "Telescope commands" },
+    { "<leader>tf", function() builtin.find_files({ cwd = utils.getTreePath() }) end, desc = "Telescope find file" },
+    { "<leader>tg", function() builtin.live_grep({ cwd = utils.getTreePath() }) end, desc = "Telescope grep" },
     { "<leader>th", builtin.help_tags,                                                desc = "Telescope find help" },
     { "<leader>tn", tel.extensions.notify.notify,                                     desc = "Telescope find notifications" },
+    { "<leader>tp", tel.extensions.project.project,                                   desc = "Telescope find project" },
+    { "<leader>tr", "<cmd>Telescope oldfiles<cr>",                                    desc = "Telescope oldfiles" },
+    { "<leader>t.", "<cmd>Telescope file_browser<cr>",                                desc = "Telescope file browser" },
 
     { "<leader>w",  proxy = "<c-w>",                                                  group = "Window" },
     { "<leader>wq", "<cmd>q<cr>",                                                     desc = "Quit window" },
@@ -77,7 +86,7 @@ wk.add({
     { "<leader>T",  group = "Tabs" },
     { "<leader>Tt", "<cmd>tabnew<cr>",                                                desc = "Open a new tab" },
     { "<leader>Tc", "<cmd>tabclose<cr>",                                              desc = "Close tab" },
-    { "<leader>Tn", "<cmd>tabnew<cr>",                                                desc = "Next tab" },
+    { "<leader>Tn", "<cmd>tabnext<cr>",                                                desc = "Next tab" },
     { "<leader>Tp", "<cmd>tabprevious<cr>",                                           desc = "Previous tab" },
 
     -- Commands that have no group

@@ -7,10 +7,13 @@ return {
     },
     config = function()
         require("nvim-tree").setup {
+            sync_root_with_cwd = true,
+            respect_buf_cwd = true,
             disable_netrw = true,
             hijack_netrw = true,
             update_focused_file = {
-                enable = true
+                enable = true,
+                update_root = true
             },
         }
     end,
