@@ -4,19 +4,56 @@ require "helpers/keyboard"
 local wk       = require("which-key")
 local builtin  = require('telescope.builtin')
 local tel      = require('telescope')
-local Terminal = require('toggleterm.terminal').Terminal
-local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
 local flash    = require('flash')
 local utils    = require("helpers.functions")
 local nvimTree = require('nvim-tree.api')
 
 tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 
+local function recompile()
+    local dir = vim.fn.expand("%:p:h")
+
+    vim.cmd([[TermExec cmd='cd ]] .. dir .. [[ && cmake ../../../ -B../../../build && make -C ../../../build && ./sol?_[0-9]*.o']])
+end
+
+local function compile()
+    local oldDir = vim.fn.getcwd()
+    local dir = vim.fn.expand("%:h")
+    -- vim.api.nvim_create_autocmd("BufWrite", {
+    --     once = true,
+    --     pattern = "messages",
+    --     callback = function ()
+    --         print("ricevuto")
+    --     end
+    -- })
+    -- vim.fn.chdir(dir)
+    -- vim.api.nvim_create_autocmd("ChanOpen", {
+    --     once = true,
+    --     -- pattern = "*bash", -- TODO this won't work on windows
+    --     callback = function()
+    --         vim.api.nvim_create_autocmd("CmdLineChanged", {
+    --             once = true,
+    --             callback = function ()
+    --                 print("cane")
+    --                 vim.fn.chdir(oldDir)
+    --             end
+    --         })
+    --         -- local eventInfo = vim.v.event.info
+    --         -- vim.print(vim.inspect(vim.api.nvim_get_chan_info(eventInfo.id)))
+    --         -- runCounter = runCounter + 1
+    --         -- if runCounter == 2 then
+    --         --     print("cane")
+    --         --     vim.fn.chdir("-")
+    --         -- end
+    --     end
+    -- })
+    -- vim.cmd("Compile")
+end
 
 -- mappings for terminal mode
 wk.add({
     mode = "t",
-    {"<Esc>", [[<c-\><c-n>]], desc = "Exit terminal input"},
+    { "<Esc>", [[<c-\><c-n>]], desc = "Exit terminal input" },
 })
 -- mappings for normal mode
 wk.add({
@@ -39,9 +76,11 @@ wk.add({
 
     { "<leader>cb", "<cmd>CMakeBuild<cr>",                              desc = "Cmake build" },
     { "<leader>cc", "<cmd>CMakeClean<cr>",                              desc = "Cmake clean" },
-    { "<leader>cI", "<cmd>CMakeInstall<cr>",                            desc = "Cmake install" },
     { "<leader>cd", "<cmd>CMakeDebug<cr>",                              desc = "Cmake debug" },
     { "<leader>ct", "<cmd>CMakeSelectBuildType<cr>",                    desc = "Cmake select builtd type" },
+    { "<leader>cI", "<cmd>CMakeInstall<cr>",                            desc = "Cmake install" },
+    { "<leader>Cc", compile,                                            desc = "Compilation Mode" },
+    { "<leader>CC", recompile,                                          desc = "Recompilation Mode" },
 
     { "<leader>d",  group = "Diagnostics" },
     { "<leader>do", "<cmd>Lspsaga show_line_diagnostics<cr>",           desc = "Lspsaga show live diagnostic" },
@@ -55,7 +94,7 @@ wk.add({
     { "<leader>ht", flash.treesitter,                                   desc = "Flash treesitter" },
     { "<leader>hf", flash.treesitter_search,                            desc = "Flash treesitter search" },
 
-    { "<leader>l",  utils.lazygit_toggle,                               desc = "OPen lazygit" },
+    { "<leader>l",  utils.lazygit_toggle,                               desc = "Open lazygit" },
 
     {
         "<leader>n",
@@ -73,8 +112,9 @@ wk.add({
     { "<leader>tb", builtin.buffers,                                                  desc = "Telescope find buffer" },
     { "<leader>tc", builtin.command_history,                                          desc = "Telescope commands" },
     { "<leader>tf", function() builtin.find_files({ cwd = utils.getTreePath() }) end, desc = "Telescope find file" },
-    { "<leader>tg", function() builtin.live_grep({ cwd = utils.getTreePath() }) end, desc = "Telescope grep" },
+    { "<leader>tg", function() builtin.live_grep({ cwd = utils.getTreePath() }) end,  desc = "Telescope grep" },
     { "<leader>th", builtin.help_tags,                                                desc = "Telescope find help" },
+    { "<leader>tk", builtin.keymaps,                                                  desc = "Telescope find keymap" },
     { "<leader>tn", tel.extensions.notify.notify,                                     desc = "Telescope find notifications" },
     { "<leader>tp", tel.extensions.project.project,                                   desc = "Telescope find project" },
     { "<leader>tr", "<cmd>Telescope oldfiles<cr>",                                    desc = "Telescope oldfiles" },
@@ -86,7 +126,7 @@ wk.add({
     { "<leader>T",  group = "Tabs" },
     { "<leader>Tt", "<cmd>tabnew<cr>",                                                desc = "Open a new tab" },
     { "<leader>Tc", "<cmd>tabclose<cr>",                                              desc = "Close tab" },
-    { "<leader>Tn", "<cmd>tabnext<cr>",                                                desc = "Next tab" },
+    { "<leader>Tn", "<cmd>tabnext<cr>",                                               desc = "Next tab" },
     { "<leader>Tp", "<cmd>tabprevious<cr>",                                           desc = "Previous tab" },
 
     -- Commands that have no group
@@ -97,7 +137,7 @@ wk.add({
     { "<leader>pd", "<cmd>Lspsaga peek_definition<cr>",                               desc = "Lspsaga peek definition" },
     { "<leader>pt", "<cmd>Lspsaga peek_type_definition<cr>",                          desc = "Lspsaga peek type definition" },
     { "<leader>rn", "<cmd>Lspsaga rename<cr>",                                        desc = "Rename file" },
-    { "<leader>F",  "<cmd>NvimTreeFocus<cr>",                                         desc = "Neotree focus" },
+    { "<leader>F",  "<cmd>NvimTreeFocus<cr>",                                         desc = "NvimTree focus" },
     { "<leader>K",  "<cmd>Lspsaga hove_doc<cr>",                                      desc = "Lspsaga hover doc" },
     { "<leader>R",  "<cmd>so %<cr>",                                                  desc = "Rename file" },
 

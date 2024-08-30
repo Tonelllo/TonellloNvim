@@ -1,8 +1,6 @@
 local M = {}
 
-local Terminal = require('toggleterm.terminal').Terminal
 local nvimTree = require('nvim-tree.api')
-local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
 local barbar   = require('barbar.api')
 
 M.HowClose = function()
@@ -38,6 +36,10 @@ M.TreeToggleBarBar = function()
 end
 
 M.lazygit_toggle = function()
+    local Terminal = require('toggleterm.terminal').Terminal
+    local lazygit  = Terminal:new({ cmd = "lazygit -p " .. vim.fn.getcwd(), hidden = false, direction = "float" })
+
+    vim.print("lazygit -p " .. vim.fn.getcwd())
     lazygit:toggle()
 end
 
