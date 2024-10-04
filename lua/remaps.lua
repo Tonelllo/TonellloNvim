@@ -13,7 +13,8 @@ tm([[<c-\>]], [[<c-\><c-n>:q<cr>]])
 local function recompile()
     local dir = vim.fn.expand("%:p:h")
 
-    vim.cmd([[TermExec cmd='cd ]] .. dir .. [[ && cmake ../../../ -B../../../build && make -C ../../../build && ./sol?_[0-9]*.o']])
+    vim.cmd([[TermExec cmd='cd ]] ..
+        dir .. [[ && cmake ../../../ -B../../../build && make -C ../../../build && ./sol?_[0-9]*.o']])
 end
 
 local function compile()
@@ -58,6 +59,8 @@ wk.add({
 -- mappings for normal mode
 wk.add({
     mode = { "n" },
+    { "j",          "gj",                                               desc = "Go down in visual lines" },
+    { "k",          "gk",                                               desc = "Go down in visual lines" },
     { "<leader>a",  group = "Dap" },
     { "<leader>ab", "<cmd>lua require'dap'.toggle_breakpoint()<CR>",    desc = "Toggle breakpoint" },
     { "<leader>ar", "<cmd>lua require'dap'.continue()<CR>",             desc = "Start debugging" },
@@ -90,7 +93,7 @@ wk.add({
     { "<leader>fo", function() vim.lsp.buf.format { async = true } end, desc = "Format current file" },
 
     { "<leader>h",  group = "Flash" },
-    { "<leader>hs", flash.jump,                                         desc = "Flash jump" },
+    { "gs",         flash.jump,                                         desc = "Flash jump" },
     { "<leader>ht", flash.treesitter,                                   desc = "Flash treesitter" },
     { "<leader>hf", flash.treesitter_search,                            desc = "Flash treesitter search" },
 
