@@ -1,7 +1,7 @@
 local M = {}
 
 local nvimTree = require('nvim-tree.api')
-local barbar   = require('barbar.api')
+-- local barbar   = require('barbar.api')
 
 M.HowClose = function()
     local tbl = fn.getbufinfo()
@@ -29,9 +29,9 @@ end
 
 M.TreeToggleBarBar = function()
     if not nvimTree.tree.is_visible() then
-        barbar.set_offset(30, 'NvimTree')
+        -- barbar.set_offset(30, 'NvimTree')
     else
-        barbar.set_offset(0)
+        -- barbar.set_offset(0)
     end
 end
 

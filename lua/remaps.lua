@@ -4,7 +4,7 @@ require "helpers/keyboard"
 local wk       = require("which-key")
 local builtin  = require('telescope.builtin')
 local tel      = require('telescope')
-local flash    = require('flash')
+-- local flash    = require('flash')
 local utils    = require("helpers.functions")
 local nvimTree = require('nvim-tree.api')
 
@@ -60,7 +60,8 @@ wk.add({
 wk.add({
     mode = { "n" },
     { "j",          "gj",                                               desc = "Go down in visual lines" },
-    { "k",          "gk",                                               desc = "Go down in visual lines" },
+    { "k",          "gk",                                               desc = "Go up in visual lines" },
+    -- { ":",          ":<c-f>i",                                               desc = "Better commandline" },
     { "<leader>a",  group = "Dap" },
     { "<leader>ab", "<cmd>lua require'dap'.toggle_breakpoint()<CR>",    desc = "Toggle breakpoint" },
     { "<leader>ar", "<cmd>lua require'dap'.continue()<CR>",             desc = "Start debugging" },
@@ -92,11 +93,11 @@ wk.add({
 
     { "<leader>fo", function() vim.lsp.buf.format { async = true } end, desc = "Format current file" },
 
-    { "<leader>h",  group = "Flash" },
-    { "gs",         flash.jump,                                         desc = "Flash jump" },
-    { "<leader>ht", flash.treesitter,                                   desc = "Flash treesitter" },
-    { "<leader>hf", flash.treesitter_search,                            desc = "Flash treesitter search" },
-
+    -- { "<leader>h",  group = "Flash" },
+    -- { "gs",         flash.jump,                                         desc = "Flash jump" },
+    -- { "<leader>ht", flash.treesitter,                                   desc = "Flash treesitter" },
+    -- { "<leader>hf", flash.treesitter_search,                            desc = "Flash treesitter search" },
+    --
     { "<leader>l",  utils.lazygit_toggle,                               desc = "Open lazygit" },
 
     {
@@ -118,7 +119,7 @@ wk.add({
     { "<leader>tg", function() builtin.live_grep({ cwd = utils.getTreePath() }) end,  desc = "Telescope grep" },
     { "<leader>th", builtin.help_tags,                                                desc = "Telescope find help" },
     { "<leader>tk", builtin.keymaps,                                                  desc = "Telescope find keymap" },
-    { "<leader>tn", tel.extensions.notify.notify,                                     desc = "Telescope find notifications" },
+    -- { "<leader>tn", tel.extensions.notify.notify,                                     desc = "Telescope find notifications" },
     { "<leader>tp", tel.extensions.project.project,                                   desc = "Telescope find project" },
     { "<leader>tr", "<cmd>Telescope oldfiles<cr>",                                    desc = "Telescope oldfiles" },
     { "<leader>t.", "<cmd>Telescope file_browser<cr>",                                desc = "Telescope file browser" },

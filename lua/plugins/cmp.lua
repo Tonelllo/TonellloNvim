@@ -93,7 +93,21 @@ return {
                 { name = 'nvim_lsp' },
                 { name = 'luasnip' }, -- For luasnip users.
             }, {
-                { name = 'buffer' },
+                { name = 'buffer',
+option = {
+    -- Every indexing_interval read indexing_batch_size lines
+    indexing_batch_size = 500,
+    indexing_interval = 500
+-- get_bufnrs = function()
+--   local buf = vim.api.nvim_get_current_buf()
+--   local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+--   if byte_size > 2048 * 2048 then -- 1 Megabyte max
+--     return {}
+--   end
+--   return { buf }
+-- end
+      }
+            },
             })
 
             -- Set configuration for specific filetype.
@@ -130,5 +144,31 @@ return {
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
         require('lspconfig').matlab_ls.setup{}
 
+
+        -- Disabling autocompletion for buffers that are too long
+        -- vim.api.nvim_create_autocmd({"BufWinEnter", "BufEnter"},{
+        --     pattern = "*",
+        --     callback = function()
+        --         if vim.api.nvim_buf_line_count(0) then
+        --               print("Autocompleting with timeout because file too long")
+        --               require('cmp').setup.buffer({enabled = false})
+        --             local timer = nil
+        --             vim.api.nvim_create_autocmd({ "TextChangedI", "CmdlineChanged" }, {
+        --               pattern = "*",
+        --               callback = function()
+        --                 if timer then
+        --                   vim.loop.timer_stop(timer)
+        --                   timer = nil
+        --                 end
+        --
+        --                 timer = vim.loop.new_timer()
+        --                 timer:start(300, 0, vim.schedule_wrap(function()
+        --                   require('cmp').complete({ reason = require('cmp').ContextReason.Auto })
+        --                 end))
+        --               end
+        --             })
+        --         end
+        --     end
+        -- })   
     end
 }

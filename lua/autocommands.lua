@@ -53,3 +53,4 @@ api.nvim_create_autocmd({"BufEnter", "BufLeave"}, {
         cmd("RainbowParentheses")
     end
 })
+
