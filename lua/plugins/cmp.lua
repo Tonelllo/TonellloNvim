@@ -94,20 +94,20 @@ return {
                 { name = 'luasnip' }, -- For luasnip users.
             }, {
                 { name = 'buffer',
-option = {
-    -- Every indexing_interval read indexing_batch_size lines
-    indexing_batch_size = 500,
-    indexing_interval = 500
--- get_bufnrs = function()
---   local buf = vim.api.nvim_get_current_buf()
---   local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
---   if byte_size > 2048 * 2048 then -- 1 Megabyte max
---     return {}
---   end
---   return { buf }
--- end
-      }
-            },
+                    option = {
+                        -- Every indexing_interval read indexing_batch_size lines
+                        indexing_batch_size = 500,
+                        indexing_interval = 500,
+                        get_bufnrs = function()
+                          local buf = vim.api.nvim_list_bufs()
+                          -- local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+                          -- if byte_size > 2048 * 2048 then -- 1 Megabyte max
+                          --   return {}
+                          -- end
+                          return buf
+                        end
+                    }
+                },
             })
 
             -- Set configuration for specific filetype.
@@ -142,7 +142,32 @@ option = {
 
         -- Set up lspconfig.
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        require('lspconfig').matlab_ls.setup{}
+        require('lspconfig').matlab_ls.setup {
+            -- cmd = { "matlab-language-server", "--stdio" , "--matlabLaunchCommandArgs", "\"\\\"-r \\\"addpath('CoopLab1/matlab_scripts_bimanual/simulation_scripts');\\\"\\\"\""},
+            -- cmd = { "matlab-language-server", "--stdio" , "--matlabLaunchCommandArgs", "\"\\\"-r \\\"disp('CoopLab1/matlab_scripts_bimanual/simulation_scripts');\\\"\\\"\""},
+            settings = {
+                MATLAB = {
+                    indexWorkspace = true,
+                    -- telemetry = false,
+                    -- matlabLaunchCommandArgs = "\"\\\"-r \\\"disp('/home/tonello/Documents/RobotEngPersonal/Y2S1/COOP/Franka/CoopLab1/matlab_scripts_bimanual/simulation_scripts');\\\"\\\"\"",
+                }
+            },
+            capabilities = capabilities,
+        }
+        require('lspconfig').pyright.setup {
+            settings = {
+                pyright = {
+                    -- Using Ruff's import organizer
+                    disableOrganizeImports = true,
+                },
+                python = {
+                    analysis = {
+                        -- Ignore all files for analysis to exclusively use Ruff for linting
+                        ignore = { '*' },
+                    },
+                },
+            },
+        }
 
 
         -- Disabling autocompletion for buffers that are too long
@@ -169,6 +194,6 @@ option = {
         --             })
         --         end
         --     end
-        -- })   
+        -- })
     end
 }

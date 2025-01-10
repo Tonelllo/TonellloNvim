@@ -50,6 +50,11 @@ local function compile()
     -- })
     -- vim.cmd("Compile")
 end
+-- Disable the documentation mapping
+vim.g["conjure#mapping#doc_word"] = false
+
+-- Rebind it from K to <prefix>gk
+vim.g["conjure#mapping#doc_word"] = "gk"
 
 -- mappings for terminal mode
 wk.add({
@@ -114,6 +119,7 @@ wk.add({
 
     { "<leader>t",  group = "Telescope" },
     { "<leader>tb", builtin.buffers,                                                  desc = "Telescope find buffer" },
+    { "<leader>td", builtin.diagnostics,                                                  desc = "Telescope find buffer" },
     { "<leader>tc", builtin.command_history,                                          desc = "Telescope commands" },
     { "<leader>tf", function() builtin.find_files({ cwd = utils.getTreePath() }) end, desc = "Telescope find file" },
     { "<leader>tg", function() builtin.live_grep({ cwd = utils.getTreePath() }) end,  desc = "Telescope grep" },

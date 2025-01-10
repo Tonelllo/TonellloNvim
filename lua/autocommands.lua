@@ -36,8 +36,13 @@ local function open_nvim_tree(data)
 
     -- buffer is a [No Name]
     local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+    local manpage = data.file:match("^/proc/+%d+/fd/+%d+$") ~= nil
 
     if not real_file and not no_name then
+        return
+    end
+
+    if manpage then
         return
     end
 
