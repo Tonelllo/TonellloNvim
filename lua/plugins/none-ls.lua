@@ -5,7 +5,7 @@ return {
         null_ls.setup({
             -- debug = true
             -- sources = {
-            --     require('NoneCustom.pddl')
+            --     require('lua.customNone')
             -- },
         })
     end

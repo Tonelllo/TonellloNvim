@@ -19,8 +19,8 @@ opt.signcolumn = "yes" -- keep the sign column
 opt.showmode = false   -- no show mode because there is status line
 
 opt.expandtab = true   -- Use spaces by default
-opt.shiftwidth = 4     -- Set amount of space characters, when we press "<" or ">"
-opt.tabstop = 4        -- 1 tab equal 2 spaces
+opt.shiftwidth = 2     -- Set amount of space characters, when we press "<" or ">"
+opt.tabstop = 2        -- 1 tab equal 2 spaces
 -- opt.smartindent = true
 
 opt.virtualedit = "block" -- ollow to go where there is no text in block mode
@@ -52,6 +52,8 @@ opt.wildmode = "longest:full,full"
 
 opt.number = true
 opt.relativenumber = true
+
+opt.swapfile = false
 --
 -- opt.foldmethod = "expr"
 -- opt.foldexpr = "nvim_treesitter#foldexpr()"

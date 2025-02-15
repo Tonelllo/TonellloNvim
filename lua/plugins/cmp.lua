@@ -144,7 +144,6 @@ option = {
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
         require('lspconfig').matlab_ls.setup{}
 
-
         -- Disabling autocompletion for buffers that are too long
         -- vim.api.nvim_create_autocmd({"BufWinEnter", "BufEnter"},{
         --     pattern = "*",

@@ -88,6 +88,17 @@ local pddl_format = {
     })
 }
 
+local uncrustify_format = {
+  name = "ros formatting",
+  method = null_ls.methods.FORMATTING,
+  filetypes = {"cpp"},
+  generator = null_ls.formatter({
+    command = "uncrustify",
+    args = {"-c","/home/tonello/ros2_ws/src/emrs/uncrustify.cfg", "-l", "CPP", "-f", "$FILENAME"}
+  })
+}
+
 -- null_ls.register(pddl_diag)
 null_ls.register(pddl_plus_diag)
 null_ls.register(pddl_format)
+null_ls.register(uncrustify_format)
