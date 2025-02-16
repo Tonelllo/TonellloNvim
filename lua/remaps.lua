@@ -68,6 +68,8 @@ wk.add({
   mode = { "n" },
   { "j",          "gj",                                            desc = "Go down in visual lines" },
   { "k",          "gk",                                            desc = "Go up in visual lines" },
+  { "v",          "m`v",                                           desc = "Save previous position after visual selection",      noremap = true },
+  { "V",          "m`V",                                           desc = "Save previous position after visual line selection", noremap = true },
   -- { ":",          ":<c-f>i",                                               desc = "Better commandline" },
   { "<leader>a",  group = "Dap" },
   { "<leader>ab", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", desc = "Toggle breakpoint" },
