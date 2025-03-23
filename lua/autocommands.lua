@@ -41,13 +41,25 @@ api.nvim_create_autocmd("QuitPre", {
   end
 })
 
+local view;
+local saveVisualPosition = api.nvim_create_augroup("SaveVisualPosition", {clear = true})
 api.nvim_create_autocmd("ModeChanged", {
-  pattern = { "v:n", "V:n" },
+  group = saveVisualPosition,
+  pattern = { "n:v", "n:V"},
   callback = function()
-    -- print(vim.inspect(vim.v.event))
-    vim.api.nvim_feedkeys("``", "m", false) -- FIXME does not work with comments and gives error
+    view = vim.fn.winsaveview()
   end
 })
+
+api.nvim_create_autocmd("ModeChanged", {
+  group = saveVisualPosition,
+  pattern = { "v:n", "V:n"},
+  callback = function()
+    -- print(vim.inspect(vim.v.event))
+    vim.fn.winrestview(view)
+  end
+})
+
 
 local function open_nvim_tree(data)
   -- buffer is a real file on the disk

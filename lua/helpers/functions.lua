@@ -48,7 +48,7 @@ M.howFormat = function()
     vim.cmd("w")
     vim.lsp.buf.format {
       async = true,
-      filter = function (client)
+      filter = function(client)
         return client.name == "null-ls"
       end
     }
@@ -56,5 +56,14 @@ M.howFormat = function()
     vim.lsp.buf.format { async = true }
   end
 end
+
+-- M.betterPaste = function(opts)
+--   print(opts)
+--   vim.api.nvim_feedkeys('p', 'ni', false)
+  -- local col = vim.api.nvim_win_get_cursor(0)[2]
+  -- vim.api.nvim_paste("test", true, -1);
+  -- local newRow = vim.api.nvim_win_get_cursor(0)[1]
+  -- vim.api.nvim_win_set_cursor(0, { newRow, col })
+-- end
 
 return M

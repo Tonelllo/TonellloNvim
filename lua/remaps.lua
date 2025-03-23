@@ -59,7 +59,7 @@ wk.add({
 
 wk.add({
   mode = "v",
-  { "<leader>x", ":lua<CR>", desc = "Execute lua selection" },
+  { "<leader>x", "<cmd>lua<CR>", desc = "Execute lua selection" },
 })
 
 
@@ -68,8 +68,9 @@ wk.add({
   mode = { "n" },
   { "j",          "gj",                                            desc = "Go down in visual lines" },
   { "k",          "gk",                                            desc = "Go up in visual lines" },
-  { "v",          "m`v",                                           desc = "Save previous position after visual selection",      noremap = true },
-  { "V",          "m`V",                                           desc = "Save previous position after visual line selection", noremap = true },
+  -- { "p",          utils.betterPaste,                                            desc = "Go up in visual lines" },
+  -- { "v",          "m`v",                                           desc = "Save previous position after visual selection",      noremap = true },
+  -- { "V",          "m`V",                                           desc = "Save previous position after visual line selection", noremap = true },
   -- { ":",          ":<c-f>i",                                               desc = "Better commandline" },
   { "<leader>a",  group = "Dap" },
   { "<leader>ab", "<cmd>lua require'dap'.toggle_breakpoint()<CR>", desc = "Toggle breakpoint" },
@@ -121,17 +122,18 @@ wk.add({
   { "<leader>sv", "<cmd>vertical split<CR>",                                        desc = "Vertical split" },
   { "<leader>so", "<cmd>split<CR>",                                                 desc = "Horizzontal Split" },
 
-  { "<leader>t",  group = "Telescope" },
-  { "<leader>tb", builtin.buffers,                                                  desc = "Telescope find buffer" },
-  { "<leader>tc", builtin.command_history,                                          desc = "Telescope commands" },
-  { "<leader>tf", function() builtin.find_files({ cwd = utils.getTreePath() }) end, desc = "Telescope find file" },
-  { "<leader>tg", function() builtin.live_grep({ cwd = utils.getTreePath() }) end,  desc = "Telescope grep" },
-  { "<leader>th", builtin.help_tags,                                                desc = "Telescope find help" },
-  { "<leader>tk", builtin.keymaps,                                                  desc = "Telescope find keymap" },
-  -- { "<leader>tn", tel.extensions.notify.notify,                                     desc = "Telescope find notifications" },
-  { "<leader>tp", tel.extensions.project.project,                                   desc = "Telescope find project" },
-  { "<leader>tr", "<cmd>Telescope oldfiles<cr>",                                    desc = "Telescope oldfiles" },
-  { "<leader>t.", "<cmd>Telescope file_browser<cr>",                                desc = "Telescope file browser" },
+    { "<leader>t",  group = "Telescope" },
+    { "<leader>tb", builtin.buffers,                                                  desc = "Telescope find buffer" },
+    { "<leader>td", builtin.diagnostics,                                              desc = "Telescope find diagnostic" },
+    { "<leader>tc", builtin.command_history,                                          desc = "Telescope commands" },
+    { "<leader>tf", function() builtin.find_files({ cwd = utils.getTreePath() }) end, desc = "Telescope find file" },
+    { "<leader>tg", function() builtin.live_grep({ cwd = utils.getTreePath() }) end,  desc = "Telescope grep" },
+    { "<leader>th", builtin.help_tags,                                                desc = "Telescope find help" },
+    { "<leader>tk", builtin.keymaps,                                                  desc = "Telescope find keymap" },
+    -- { "<leader>tn", tel.extensions.notify.notify,                                     desc = "Telescope find notifications" },
+    { "<leader>tp", tel.extensions.project.project,                                   desc = "Telescope find project" },
+    { "<leader>tr", "<cmd>Telescope oldfiles<cr>",                                    desc = "Telescope oldfiles" },
+    { "<leader>t.", "<cmd>Telescope file_browser<cr>",                                desc = "Telescope file browser" },
 
   { "<leader>w",  proxy = "<c-w>",                                                  group = "Window" },
   { "<leader>wq", "<cmd>q<cr>",                                                     desc = "Quit window" },
