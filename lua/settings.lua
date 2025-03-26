@@ -70,6 +70,10 @@ lsp.set_log_level("off")
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- vim.diagnostic.config{
+--     virtual_lines = true
+-- }
+
 if vim.fn.has("nvim-0.10") == 1 then
     opt.smoothscroll = true
 end
