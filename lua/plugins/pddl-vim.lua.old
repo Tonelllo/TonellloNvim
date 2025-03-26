@@ -1,3 +1,0 @@
-return{
-    "PontusHanssen/pddl.vim"
-}
