@@ -3,6 +3,7 @@ require "autocommands"
 require "remaps"
 require "settings"
 require "neovidecnf"
+require "customNone"
 require "lspservers"
 
 -- vim.lsp.set_log_level("debug")
