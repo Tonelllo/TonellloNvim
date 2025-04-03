@@ -73,6 +73,7 @@ vim.g.loaded_netrwPlugin = 1
 -- vim.diagnostic.config{
 --     virtual_lines = true
 -- }
+vim.diagnostic.config({ virtual_text = true }) -- Only if needed in your configuration, if you already have native LSP diagnostics
 
 if vim.fn.has("nvim-0.10") == 1 then
     opt.smoothscroll = true

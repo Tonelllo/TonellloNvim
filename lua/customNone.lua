@@ -130,7 +130,7 @@ local uncrustify_format = {
 }
 
 -- null_ls.register(pddl_diag)
-null_ls.register(pddl_plus_diag)
-null_ls.register(pddl_format)
+-- null_ls.register(pddl_plus_diag)
+-- null_ls.register(pddl_format)
 null_ls.register(uncrustify_format)
 null_ls.register(ros_cpp_diag)
