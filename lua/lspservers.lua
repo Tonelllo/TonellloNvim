@@ -47,5 +47,12 @@ vim.lsp.config('lua_ls', {
     }
 })
 
+-- vim.lsp.config('lua_ls')
+-- vim.lsp.config('cmake')
+-- vim.lsp.config('pylsp')
+
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('clangd')
+vim.lsp.enable('neocmake')
+vim.lsp.enable('pylsp')
+vim.lsp.enable('clojure_lsp')

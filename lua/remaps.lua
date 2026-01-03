@@ -164,6 +164,15 @@ wk.add({
             end
         end,
         desc = "Quickrun"
+    },
+    {
+        "<F4>",
+        function()
+            if vim.fn.exists(':LspClangdSwitchSourceHeader') > 0 then
+                vim.cmd(':LspClangdSwitchSourceHeader')
+            end
+        end,
+        desc = "Switch source header"
     }
 })
 
