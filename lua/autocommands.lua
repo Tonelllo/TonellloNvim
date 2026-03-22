@@ -48,14 +48,52 @@ local function open_nvim_tree(data)
 
     -- open the tree, find the file but don't focus it
     require("nvim-tree.api").tree.toggle({ focus = false, find_file = true, })
-	vim.api.nvim_exec_autocmds('BufWinEnter', {buffer = require('nvim-tree.view').get_bufnr()})
+    vim.api.nvim_exec_autocmds('BufWinEnter', { buffer = require('nvim-tree.view').get_bufnr() })
 end
 api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
-api.nvim_create_autocmd({"BufEnter", "BufLeave"}, {
+api.nvim_create_autocmd({ "BufEnter", "BufLeave" }, {
     pattern = "*.pddl",
-    callback = function ()
+    callback = function()
         cmd("RainbowParentheses")
     end
 })
 
+api.nvim_create_autocmd({ "VimEnter" }, {
+    pattern = "VeryLazy",
+    callback = function()
+        local remoteInstalled = require('lazy.core.config').plugins["remote-nvim.nvim"] ~= nil
+        local devpodInstalled = vim.fn.executable("devpod") == 1
+        if remoteInstalled and not devpodInstalled then
+            local ret = vim.fn.confirm("Devpod not installed. Install?", "&Yes\n&No", 2)
+            if ret == 1 then
+                vim.notify("Installing devpod")
+                vim.cmd("split")
+                vim.cmd("resize 15")
+                local buf = vim.api.nvim_create_buf(false, true) -- [listed=false, scratch=true]
+
+                vim.api.nvim_set_current_buf(buf)
+
+                vim.fn.termopen(
+                    [[curl -L -o devpod "https://github.com/loft-sh/devpod/releases/latest/download/devpod-linux-amd64" && sudo install -c -m 0755 devpod /usr/local/bin && rm -f devpod]],
+                    {
+                        on_exit = function(_, code)
+                            if code == 0 then
+                                vim.schedule(function()
+                                    vim.api.nvim_buf_delete(buf, { force = true })
+                                end)
+                            else
+                                vim.defer_fn(function()
+                                    vim.schedule(function()
+                                        vim.notify("Command failed (exit code " .. code .. ")", vim.log.levels.ERROR)
+                                        vim.api.nvim_buf_delete(buf, { force = true })
+                                    end)
+                                end, 1500)
+                            end
+                        end
+                    })
+                vim.cmd("startinsert")
+            end
+        end
+    end
+})

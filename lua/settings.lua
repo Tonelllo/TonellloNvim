@@ -61,6 +61,9 @@ opt.termguicolors = true
 
 opt.scrolloff = 10
 
+opt.undofile = true
+opt.undodir = "~/.nvim/undodir"
+
 lsp.set_log_level("off")
 
 -- opt.cmdheight = 0

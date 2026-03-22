@@ -61,6 +61,20 @@ wk.add({
     mode = "t",
     { "<Esc>", [[<c-\><c-n>]], desc = "Exit terminal input" },
 })
+
+
+-- lua execution
+wk.add {
+    mode = { "n" },
+    { "<leader><leader>x", "<cmd>source %<CR>", desc = "Execute entire lua file" },
+    { "<leader>x",         ":.lua<CR>",         desc = "Execute current line" },
+}
+wk.add {
+    mode = { "v" },
+    { "<leader>x", ":lua<CR>", desc = "Execute current highlight" },
+}
+
+
 -- mappings for normal mode
 wk.add({
     mode = { "n" },
@@ -119,7 +133,7 @@ wk.add({
 
     { "<leader>t",  group = "Telescope" },
     { "<leader>tb", builtin.buffers,                                                  desc = "Telescope find buffer" },
-    { "<leader>td", builtin.diagnostics,                                                  desc = "Telescope find buffer" },
+    { "<leader>td", builtin.diagnostics,                                              desc = "Telescope find buffer" },
     { "<leader>tc", builtin.command_history,                                          desc = "Telescope commands" },
     { "<leader>tf", function() builtin.find_files({ cwd = utils.getTreePath() }) end, desc = "Telescope find file" },
     { "<leader>tg", function() builtin.live_grep({ cwd = utils.getTreePath() }) end,  desc = "Telescope grep" },
