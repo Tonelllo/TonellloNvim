@@ -1,3 +1,0 @@
-return {
-    "Tonelllo/himalaya-vim"
-}
