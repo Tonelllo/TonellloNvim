@@ -62,7 +62,7 @@ opt.termguicolors = true
 opt.scrolloff = 10
 
 opt.undofile = true
-opt.undodir = "~/.nvim/undodir"
+opt.undodir = vim.fn.expand("~/.nvim/undodir")
 
 lsp.set_log_level("off")
 
