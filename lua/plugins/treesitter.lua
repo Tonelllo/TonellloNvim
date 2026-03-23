@@ -27,12 +27,10 @@ return {
             ensure_installed = {
                 "bash",
                 "c",
-                "latex",
                 "lua",
                 "markdown_inline",
                 "markdown",
                 "matlab",
-                "org",
                 "python",
                 "rust"
             },
